@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="21">
+    <author>Freelance Modding Crew</author>
+    <version>2.0.7</version>
+    <contributors></contributors>
+    
+    <title>
+        <en>Vehicle-groups Switcher - 'VeGS'</en>
+        <de>Vehicle-groups Switcher - 'VeGS'</de>
+        <fr>Vehicle-groups Switcher - 'VeGS'</fr>
+        <pl>Vehicle-groups Switcher - 'VeGS'</pl>
+    </title>
+    
+    <description>
+        <en>
+<![CDATA[Put your fleet of vehicles into more manageable groups, and
+switch within the group only.
+
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </en>
+        <de>
+<![CDATA[Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und
+wechseln Sie nur noch innerhalb der Gruppe.
+
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </de>
+        <fr> <!-- http://translate.google.com - english to french translation -->
+<![CDATA[Mettez votre flotte de véhicules en groupes plus faciles à gérer, et
+passer dans le seul groupe.
+
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </fr>
+        <pl> <!-- http://translate.google.com - english to polish translation -->
+<![CDATA[Połóż swoją flotę pojazdów na bardziej przystępne grupy, a
+przełączyć się w grupie.
+
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </pl>
+    </description>
+
+    <iconFilename>store_VehicleGroupsSwitcher.dds</iconFilename>
+    <multiplayer supported="true" />
+    
+    <extraSourceFiles>
+        <sourceFile filename="VehicleGroupsSwitcher.lua" />
+    </extraSourceFiles>
+
+    <l10n filenamePrefix="modDesc_l10n" /> <!-- Load the corresponding modDesc_l10n_<language>.XML file, or revert to 'en'/'de'. -->
+
+    <inputBindings>    
+        <input name="VEGS_GRP_TAB"     category="VEHICLE"        key1=""                key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_NXT"     category="VEHICLE"        key1=""                key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_01"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_1" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_02"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_2" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_03"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_3" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_04"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_4" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_05"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_5" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_06"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_6" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_07"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_7" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_08"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_8" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_09"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_9" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_10"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_0" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_TOGGLE_EDIT" category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_e" key2="" button="" device="0" mouse="" />
+    </inputBindings>
+</modDesc>
