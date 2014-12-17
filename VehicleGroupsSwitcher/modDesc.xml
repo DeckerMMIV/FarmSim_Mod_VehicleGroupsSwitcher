@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="13">
-    <author>Decker_MMIV</author>
-    <version>1.0.98</version>
+<modDesc descVersion="21">
+    <author>Freelance Modding Crew</author>
+    <version>2.0.6</version>
     <title>
-        <en>VeG-S - VehicleGroups Switcher</en>
-        <de>VeG-S - VehicleGroups Switcher</de>
-        <fr>VeG-S - VehicleGroups Switcher</fr>
-        <pl>VeG-S - VehicleGroups Switcher</pl>
+        <en>Vehicle-groups Switcher - 'VeGS'</en>
+        <de>Vehicle-groups Switcher - 'VeGS'</de>
+        <fr>Vehicle-groups Switcher - 'VeGS'</fr>
+        <pl>Vehicle-groups Switcher - 'VeGS'</pl>
     </title>
     <description>
         <en>
 <![CDATA[Put your fleet of vehicles into more manageable groups, and
 switch within the group only.
 
+
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </en>
-        <de> <!-- translation by fribex -->
+        <de>
 <![CDATA[Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und
 wechseln Sie nur noch innerhalb der Gruppe.
+
 
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </de>
@@ -25,11 +27,13 @@ Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
 <![CDATA[Mettez votre flotte de véhicules en groupes plus faciles à gérer, et
 passer dans le seul groupe.
 
+
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </fr>
         <pl> <!-- http://translate.google.com - english to polish translation -->
 <![CDATA[Połóż swoją flotę pojazdów na bardziej przystępne grupy, a
 przełączyć się w grupie.
+
 
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </pl>
@@ -39,54 +43,60 @@ Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
     <multiplayer supported="true" />
     
     <extraSourceFiles>
-      <sourceFile filename="VehicleGroupsSwitcher.lua" />
+        <sourceFile filename="VehicleGroupsSwitcher.lua" />
     </extraSourceFiles>
 
     <l10n>
         <text name="VEGS">
-            <en>== VeG-S - VehicleGroups Switcher ==</en>
-            <de>== VeG-S - VehicleGroups Switcher ==</de>
-            <fr>== VeG-S - VehicleGroups Switcher ==</fr>
-            <pl>== VeG-S - VehicleGroups Switcher ==</pl>
+            <en>== Vehicle-groups Switcher - 'VeGS' ==</en>
+            <de>== Vehicle-groups Switcher - 'VeGS' ==</de>
+            <fr>== Vehicle-groups Switcher - 'VeGS' ==</fr>
+            <pl>== Vehicle-groups Switcher - 'VeGS' ==</pl>
         </text>
         
         <text name="ControlsError">
             <en>
-<![CDATA[VeG-S: Problem with input-bindings!
+<![CDATA[VeGS: Problem with input-bindings!
 
 Please assign the same key-modifier to all the
 'Group 1 .. 10' and 'Toggle edit-mode'
-actions for the VeG-S mod, in Options->Controls.
+actions for the VeGS mod, in Options->Controls.
 
 A key-modifier is SHIFT, CTRL or ALT.]]>        
             </en>
             <de> <!-- translation by fribex -->
-<![CDATA[VeG-S: Problem mit den 'input-bindings'!
+<![CDATA[VeGS: Problem mit den 'input-bindings'!
 
-Bitte weisen Sie im Fenster 'Optionen->Steuerung' allen 'VeG-S'-Einträgen die gleiche Zusatztaste zu.
+Bitte weisen Sie im Fenster 'Optionen->Steuerung' allen 'VeGS'-Einträgen die gleiche Zusatztaste zu.
 
 Mögliche Zusatztasten: SHIFT, STRG oder ALT.]]>        
             </de>
             <fr> <!-- http://translate.google.com - english to french translation -->
-<![CDATA[VeG-S: un problème d'entrée-bindings!
+<![CDATA[VeGS: un problème d'entrée-bindings!
 
 S'il vous plaît assigner la même touche modificateur à tous les
 'Groupe 1 .. 10' et 'Basculer en mode édition'
-actions pour le mod VeG-S, dans Options->Commandes.
+actions pour le mod VeGS, dans Options->Commandes.
 
 Une clé-modificateur est SHIFT, CTRL ou ALT.]]>        
             </fr>
             <pl> <!-- http://translate.google.com - english to polish translation -->
-<![CDATA[VeG-S: Problem z wejściem-wiązań!
+<![CDATA[VeGS: Problem z wejściem-wiązań!
 
 Proszę przypisać ten sam klucz-modyfikator do wszystkich
 'Grupa 1 .. 10' oraz 'Przełączanie trybu edycji'
-działania na VeG-S mod, w Opcje->Controls.
+działania na VeGS mod, w Opcje->Controls.
 
 Key-modyfikator jest SHIFT, CTRL lub ALT.]]>        
             </pl>
         </text>
-        
+
+        <text name="groupLabel">
+            <en>%d: %s</en>
+            <de>%d: %s</de>
+            <fr>%d: %s</fr>
+            <pl>%d: %s</pl>
+        </text>
         <text name="group">
             <en>Group %d </en>
             <de>Gruppe %d</de>
@@ -100,51 +110,89 @@ Key-modyfikator jest SHIFT, CTRL lub ALT.]]>
             <pl>Nieprzypisane</pl>
         </text>
         <text name="editGroupUp">
-            <en>VeG-S: Move to previous group      </en>
-            <de>VeG-S: Zum vorherigen Gruppe       </de>
-            <fr>VeG-S: Déplacer groupe précédent   </fr>
-            <pl>VeG-S: Przejść do poprzedniej grupy</pl>
+            <en>VeGS: Move to previous group      </en>
+            <de>VeGS: Zum vorherigen Gruppe       </de>
+            <fr>VeGS: Déplacer groupe précédent   </fr>
+            <pl>VeGS: Przejść do poprzedniej grupy</pl>
         </text>
         <text name="editGroupDown">
-            <en>VeG-S: Move to next group        </en>
-            <de>VeG-S: Zur nächsten Gruppe       </de>
-            <fr>VeG-S: Déplacer groupe suivant   </fr>
-            <pl>VeG-S: Przejść do następnej grupy</pl>
+            <en>VeGS: Move to next group        </en>
+            <de>VeGS: Zur nächsten Gruppe       </de>
+            <fr>VeGS: Déplacer groupe suivant   </fr>
+            <pl>VeGS: Przejść do następnej grupy</pl>
         </text>
         <text name="editPosUp">
-            <en>VeG-S: Move up within group             </en>
-            <de>VeG-S: Move up innerhalb der Gruppe     </de> <!-- translate.google.com -->
-            <fr>VeG-S: Déplacez-vous au sein du groupe  </fr> <!-- translate.google.com -->
-            <pl>VeG-S: Przenieś się w ramach grupy      </pl> <!-- translate.google.com -->
+            <en>VeGS: Move up within group             </en>
+            <de>VeGS: Move up innerhalb der Gruppe     </de> <!-- translate.google.com -->
+            <fr>VeGS: Déplacez-vous au sein du groupe  </fr> <!-- translate.google.com -->
+            <pl>VeGS: Przenieś się w ramach grupy      </pl> <!-- translate.google.com -->
         </text>
         <text name="editPosDown">
-            <en>VeG-S: Move down within group           </en>
-            <de>VeG-S: Nach unten innerhalb der Gruppe  </de> <!-- translate.google.com -->
-            <fr>VeG-S: Descendre au sein du groupe      </fr> <!-- translate.google.com -->
-            <pl>VeG-S: Przenieś w dół w obrębie grupy   </pl> <!-- translate.google.com -->
+            <en>VeGS: Move down within group           </en>
+            <de>VeGS: Nach unten innerhalb der Gruppe  </de> <!-- translate.google.com -->
+            <fr>VeGS: Descendre au sein du groupe      </fr> <!-- translate.google.com -->
+            <pl>VeGS: Przenieś w dół w obrębie grupy   </pl> <!-- translate.google.com -->
         </text>
 
-                                                       <!-- fribex -->
+        <!-- Tips when in edit-mode -->
+        <text name="tip-1">
+            <en>When in edit-mode, use up/down keys to move vehicle to another group.</en>
+            <de>Wenn im Bearbeitungsmodus, verwenden Sie nach oben/unten-Tasten, um Fahrzeug in eine andere Gruppe verschieben.</de> <!-- translate.google.com -->
+            <fr>Quand en mode édition, utilisez les touches HAUT/BAS pour déplacer un véhicule à un autre groupe.</fr>               <!-- translate.google.com -->
+            <pl>Gdy w trybie edycji, należy użyć przycisków w górę/w dół, aby przejść do innej grupy pojazdów.</pl>                <!-- translate.google.com -->
+        </text>
+        <text name="tip-2">
+            <en>When in edit-mode, use left/right keys to move vehicle within the group.</en>
+            <de>Wenn im Bearbeitungsmodus, verwenden Sie links/rechts Tasten, um Fahrzeug innerhalb der Gruppe zu bewegen.</de> <!-- translate.google.com -->
+            <fr>Quand en mode édition, utilisez les touches gauche/droite pour déplacer le véhicule au sein du groupe.</fr>     <!-- translate.google.com -->
+            <pl>Gdy w trybie edycji, za pomocą przycisków w lewo/w prawo, aby poruszać pojazd w grupie.</pl>                    <!-- translate.google.com -->
+        </text>
+        <text name="tip-3">
+            <en>When in edit-mode, rename group by holding modifier-key and key for group-number.</en>
+            <de>Wenn im Bearbeitungsmodus, umbenennen Gruppe indem Modifikator-Schlüssel und Schlüssel für Gruppennummer.</de> <!-- translate.google.com -->
+            <fr>Quand en mode édition, renommer le groupe en tenant modificateur-clé et la clé pour le groupe-nombre.</fr>     <!-- translate.google.com -->
+            <pl>Gdy w trybie edycji, zmienić nazwę grupy, przytrzymując klawisz modyfikujący dla grupy i klucz numeru.</pl>    <!-- translate.google.com -->
+        </text>
+        
+        <!-- Tips for all users -->
+        <text name="tip1">
+            <en>Enable/disable a group by holding modifier-key and key for group-number.</en>
+            <de>Aktivieren/Deaktivieren einer Gruppe, indem Modifikator-Schlüssel und Schlüssel für Gruppennummer.</de> <!-- translate.google.com -->
+            <fr>Activer/désactiver un groupe en tenant modificateur-clé et la clé pour le groupe-nombre.</fr>           <!-- translate.google.com -->
+            <pl>Włączanie/wyłączanie grupy przytrzymując klawisz modyfikujący dla grupy i klucz numeru.</pl>            <!-- translate.google.com -->
+        </text>
+        <text name="tip2">
+            <en>When on foot, double click modifier-key to show VeGS.</en>
+            <de>Wenn Sie zu Fuß, doppelklicken Sie Modifier-Taste, um VeGS zeigen.</de>   <!-- translate.google.com -->
+            <fr>Quand à pied, double-cliquez modificateur-touche pour afficher VeGS.</fr> <!-- translate.google.com -->
+            <pl>Gdy na piechotę, kliknij dwukrotnie modyfikator-key pokazać VeGS.</pl>    <!-- translate.google.com -->
+        </text>
+        <text name="tip3">
+            <en>Keys for VeGS can be changed in the Options,Controls screen.</en>
+            <de>Keys für VeGS kann geändert werden in den Optionen Controls Bildschirm.</de>   <!-- translate.google.com -->
+            <fr>Clés pour VeGS peuvent être modifiés dans les Options, l'écran Contrôles.</fr> <!-- translate.google.com -->
+            <pl>Klucze do VeGS można zmienić w opcjach, ekran Controls.</pl>                   <!-- translate.google.com -->
+        </text>
+        
         <text name="player"    ><en>(player)    </en><de>(Spieler)   </de><fr>(player)    </fr><pl>(player)    </pl></text>
         <text name="hired"     ><en>(hired)     </en><de>(versteckt) </de><fr>(hired)     </fr><pl>(hired)     </pl></text>
         <text name="courseplay"><en>(courseplay)</en><de>(courseplay)</de><fr>(courseplay)</fr><pl>(courseplay)</pl></text>
         <text name="followme"  ><en>(followme)  </en><de>(followme)  </de><fr>(followme)  </fr><pl>(followme)  </pl></text>
         <text name="unknown"   ><en>(?)         </en><de>(unbekannt) </de><fr>(?)         </fr><pl>(?)         </pl></text>
 
-                                                                            <!-- fribex -->
-        <text name="VEGS_GRP_TAB"    ><en>VeG-S: Switch within group</en><de>VeG-S: Schalten innerh. der Gruppe  </de><fr>VeG-S: Arbitrage au sein du groupe</fr><pl>VeG-S: Przełącz się w ramach grupy</pl></text>
-        <text name="VEGS_GRP_NXT"    ><en>VeG-S: To next group      </en><de>VeG-S: Zum nächsten Gruppe          </de><fr>VeG-S: Pour le groupe suivant     </fr><pl>VeG-S: Do następnej grupy         </pl></text>
-        <text name="VEGS_GRP_01"     ><en>VeG-S: Group 1            </en><de>VeG-S: Gruppe 1                     </de><fr>VeG-S: Groupe 1                   </fr><pl>VeG-S: Grupa 1                    </pl></text>
-        <text name="VEGS_GRP_02"     ><en>VeG-S: Group 2            </en><de>VeG-S: Gruppe 2                     </de><fr>VeG-S: Groupe 2                   </fr><pl>VeG-S: Grupa 2                    </pl></text>
-        <text name="VEGS_GRP_03"     ><en>VeG-S: Group 3            </en><de>VeG-S: Gruppe 3                     </de><fr>VeG-S: Groupe 3                   </fr><pl>VeG-S: Grupa 3                    </pl></text>
-        <text name="VEGS_GRP_04"     ><en>VeG-S: Group 4            </en><de>VeG-S: Gruppe 4                     </de><fr>VeG-S: Groupe 4                   </fr><pl>VeG-S: Grupa 4                    </pl></text>
-        <text name="VEGS_GRP_05"     ><en>VeG-S: Group 5            </en><de>VeG-S: Gruppe 5                     </de><fr>VeG-S: Groupe 5                   </fr><pl>VeG-S: Grupa 5                    </pl></text>
-        <text name="VEGS_GRP_06"     ><en>VeG-S: Group 6            </en><de>VeG-S: Gruppe 6                     </de><fr>VeG-S: Groupe 6                   </fr><pl>VeG-S: Grupa 6                    </pl></text>
-        <text name="VEGS_GRP_07"     ><en>VeG-S: Group 7            </en><de>VeG-S: Gruppe 7                     </de><fr>VeG-S: Groupe 7                   </fr><pl>VeG-S: Grupa 7                    </pl></text>
-        <text name="VEGS_GRP_08"     ><en>VeG-S: Group 8            </en><de>VeG-S: Gruppe 8                     </de><fr>VeG-S: Groupe 8                   </fr><pl>VeG-S: Grupa 8                    </pl></text>
-        <text name="VEGS_GRP_09"     ><en>VeG-S: Group 9            </en><de>VeG-S: Gruppe 9                     </de><fr>VeG-S: Groupe 9                   </fr><pl>VeG-S: Grupa 9                    </pl></text>
-        <text name="VEGS_GRP_10"     ><en>VeG-S: Group 10           </en><de>VeG-S: Gruppe 10                    </de><fr>VeG-S: Groupe 10                  </fr><pl>VeG-S: Grupa 10                   </pl></text>
-        <text name="VEGS_TOGGLE_EDIT"><en>VeG-S: Toggle edit-mode   </en><de>VeG-S: Editiermodus ein/aus         </de><fr>VeG-S: Basculer en mode édition   </fr><pl>VeG-S: Przełączanie trybu edycji  </pl></text>
+        <text name="VEGS_GRP_TAB"    ><en>VeGS: Switch within group</en><de>VeGS: Schalten innerh. der Gruppe  </de><fr>VeGS: Arbitrage au sein du groupe</fr><pl>VeGS: Przełącz się w ramach grupy</pl></text>
+        <text name="VEGS_GRP_NXT"    ><en>VeGS: To next group      </en><de>VeGS: Zum nächsten Gruppe          </de><fr>VeGS: Pour le groupe suivant     </fr><pl>VeGS: Do następnej grupy         </pl></text>
+        <text name="VEGS_GRP_01"     ><en>VeGS: Group 1            </en><de>VeGS: Gruppe 1                     </de><fr>VeGS: Groupe 1                   </fr><pl>VeGS: Grupa 1                    </pl></text>
+        <text name="VEGS_GRP_02"     ><en>VeGS: Group 2            </en><de>VeGS: Gruppe 2                     </de><fr>VeGS: Groupe 2                   </fr><pl>VeGS: Grupa 2                    </pl></text>
+        <text name="VEGS_GRP_03"     ><en>VeGS: Group 3            </en><de>VeGS: Gruppe 3                     </de><fr>VeGS: Groupe 3                   </fr><pl>VeGS: Grupa 3                    </pl></text>
+        <text name="VEGS_GRP_04"     ><en>VeGS: Group 4            </en><de>VeGS: Gruppe 4                     </de><fr>VeGS: Groupe 4                   </fr><pl>VeGS: Grupa 4                    </pl></text>
+        <text name="VEGS_GRP_05"     ><en>VeGS: Group 5            </en><de>VeGS: Gruppe 5                     </de><fr>VeGS: Groupe 5                   </fr><pl>VeGS: Grupa 5                    </pl></text>
+        <text name="VEGS_GRP_06"     ><en>VeGS: Group 6            </en><de>VeGS: Gruppe 6                     </de><fr>VeGS: Groupe 6                   </fr><pl>VeGS: Grupa 6                    </pl></text>
+        <text name="VEGS_GRP_07"     ><en>VeGS: Group 7            </en><de>VeGS: Gruppe 7                     </de><fr>VeGS: Groupe 7                   </fr><pl>VeGS: Grupa 7                    </pl></text>
+        <text name="VEGS_GRP_08"     ><en>VeGS: Group 8            </en><de>VeGS: Gruppe 8                     </de><fr>VeGS: Groupe 8                   </fr><pl>VeGS: Grupa 8                    </pl></text>
+        <text name="VEGS_GRP_09"     ><en>VeGS: Group 9            </en><de>VeGS: Gruppe 9                     </de><fr>VeGS: Groupe 9                   </fr><pl>VeGS: Grupa 9                    </pl></text>
+        <text name="VEGS_GRP_10"     ><en>VeGS: Group 10           </en><de>VeGS: Gruppe 10                    </de><fr>VeGS: Groupe 10                  </fr><pl>VeGS: Grupa 10                   </pl></text>
+        <text name="VEGS_TOGGLE_EDIT"><en>VeGS: Toggle edit-mode   </en><de>VeGS: Editiermodus ein/aus         </de><fr>VeGS: Basculer en mode édition   </fr><pl>VeGS: Przełączanie trybu edycji  </pl></text>
     </l10n>
 
     <inputBindings>    

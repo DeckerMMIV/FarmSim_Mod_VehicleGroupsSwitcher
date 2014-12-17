@@ -1,5 +1,5 @@
 --
--- VeG-S - VehicleGroups Switcher - (previously known as "FastSwitcher")
+-- Vehicle-groups Switcher (VeGS)
 --
 -- @author  Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com
 -- @date    2012-11-17
@@ -29,17 +29,21 @@
 --  2014-February
 --      v0.98       - Changed method of getting vehicle name, to be the same as Glance.
 --                  - getVehicleName() function added to 'Vehicle' table.
+--  2014-November
+--      v2.0.0      - Upgraded to FS15.
+--                  - Minor text changes; "VeG-S" changed to "VeGS".
+--                  - Font style and panel to fit FS15.
+--                  - Now with possibility of renaming the groups.
+--                     Using the chat-dialog for capturing the group-name.
+--                  - Work-around for crouch, must now double-tap modifier-key when on foot.
+--                  - Added tips, that switches every 7th second.
+--      v2.0.1      - Fix for chat-dialog not working correctly.
+--      v2.0.2      - Attempted fix for sending updates to clients.
+--      v2.0.3      - Courseplay v4.00.0056 now has different way of telling if its driving.
+--  2014-December
+--      v2.0.5      - Hopefully better "column balancing" calculation code.
+--      v2.0.6      - Fix for infinite-loop in "column balancing" code.
 --
-
---[[
-
-Bugs/Suggestions
-
-buciffal
-  How doable is changing the names of the groups? Say like from "Group 1" to "Cowzone" and so on... depending of each one's needs  
-  http://fs-uk.com/forum/index.php?topic=124904.msg862509#msg862509
-
---]]
 
 
 VehicleGroupsSwitcher = {};
@@ -49,16 +53,24 @@ VehicleGroupsSwitcher.version = (modItem and modItem.version) and modItem.versio
 --
 VehicleGroupsSwitcher.showingVeGS = false;
 --
-VehicleGroupsSwitcher.hudPosSize = {x1=0.15, x2=0.55, x=0.37, y=0.8, w=1, h=0.8}; -- X,Y,Width,Height        -- TODO: Make position customizable from within the game.
-VehicleGroupsSwitcher.bigFontSize   = 0.023;
-VehicleGroupsSwitcher.smallFontSize = 0.020;
+VehicleGroupsSwitcher.bigFontSize   = 0.020;
+VehicleGroupsSwitcher.smallFontSize = 0.017;
+VehicleGroupsSwitcher.hudOverlayPosSize = {0.2,0.1, 0.6,0.8}; -- X,Y,Width,Height
+VehicleGroupsSwitcher.hudTitlePos       = {0.5,0.86} -- X(center),Y
+VehicleGroupsSwitcher.hudColumnsPos     = {
+   { 0.30, VehicleGroupsSwitcher.hudTitlePos[2] - VehicleGroupsSwitcher.bigFontSize }  -- Col1(x,y)
+  ,{ 0.60, VehicleGroupsSwitcher.hudTitlePos[2] - VehicleGroupsSwitcher.bigFontSize }  -- Col2(x,y)
+}
+
 VehicleGroupsSwitcher.fontColor         = {1.0, 1.0, 1.0, 1.0}; -- white
 VehicleGroupsSwitcher.fontSelectedColor = {1.0, 1.0, 0.3, 1.0}; -- yellowish
 VehicleGroupsSwitcher.fontShadeColor    = {0.0, 0.0, 0.0, 1.0}; -- black
 VehicleGroupsSwitcher.fontDisabledColor = {0.5, 0.5, 0.5, 1.0}; -- gray
 --
+VehicleGroupsSwitcher.groupNames = {}
 VehicleGroupsSwitcher.groupsDisabled = {};
-VehicleGroupsSwitcher.initialized = 0;
+VehicleGroupsSwitcher.initialized = -1;
+VehicleGroupsSwitcher.showError = false;
 VehicleGroupsSwitcher.hasRefreshedOnJoin = nil;
 
 -- Register as event listener
@@ -88,10 +100,9 @@ end
 --
 --
 
--- FS2013
 -- Support-function, that I would like to see be added to InputBinding class.
 -- Maybe it is, I just do not know what its called.
-function getKeyIdOfModifier(binding)
+local function getKeyIdOfModifier(binding)
     if InputBinding.actions[binding] == nil then
         return nil;  -- Unknown input-binding.
     end;
@@ -104,47 +115,110 @@ function getKeyIdOfModifier(binding)
     end;
     return nil;
 end
---]]
-
---[[ FS2011
---http://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
-function Set(list)
-    local set = {};
-    for _,l in ipairs(list) do
-        set[l]=true;
-    end;
-    return set;
-end;
-
-function getKeyIdOfModifier(binding)
-    local allowedModifiers = Set({
-        Input.KEY_lshift,
-        Input.KEY_rshift,
-        Input.KEY_shift,
-        Input.KEY_lctrl, 
-        Input.KEY_rctrl, 
-        Input.KEY_lalt,  
-        Input.KEY_ralt  
-    });
-    for _,k in pairs(InputBinding.digitalActions[binding].key1Modifiers) do
-        if allowedModifiers[k] then
-            return k;
-        end;
-    end;
-    return nil;
-end;
---]]
 
 --
+
+local function FS13renderTextWithShade(x,y, textSize, forecolor, text)
+    setTextColor(unpack(VehicleGroupsSwitcher.fontShadeColor));
+    renderText(x + (textSize/20), y - (textSize/10), textSize, text);
+    setTextColor(unpack(forecolor));
+    renderText(x, y, textSize, text);
+end;
+
+local function FS15renderText(x,y, textSize, forecolor, text)
+    setTextColor(unpack(forecolor));
+    renderText(x, y, textSize, text);
+end;
+
 --
+
+VehicleGroupsSwitcher.onGroupNameRename = function(self, superFunc)
+  if not VehicleGroupsSwitcher.groupIdxToRename then
+    superFunc(self)
+  else
+    if self.textElement.text ~= "" then
+      VehicleGroupsSwitcher.groupNames[VehicleGroupsSwitcher.groupIdxToRename] = filterText(self.textElement.text)
+      VehicleGroupsSwitcher.dirtyTimeout = g_currentMission.time + 2000; -- broadcast update, after 2 seconds have passed from now
+      VehicleGroupsSwitcher.needToSaveGroupNames = true
+    end
+    VehicleGroupsSwitcher.groupIdxToRename = nil
+    self.textElement:setText("")
+    g_gui:showGui("")
+  end
+end
+
+function VehicleGroupsSwitcher.loadGroupNames()
+  if g_server ~= nil or g_dedicatedServerInfo ~= nil then
+    local tag="VehicleGroupsSwitcher"
+    local fileName = g_currentMission.missionInfo:getSavegameDirectory(g_currentMission.missionInfo.savegameIndex) .. "/VehicleGroupsSwitcher_Config.XML"
+    if fileExists(fileName) then
+      local xmlFile = loadXMLFile(tag, fileName)
+      if xmlFile ~= nil and xmlFile ~= 0 then
+        local i=0
+        while true do
+          local groupTag = (tag..".group(%d)"):format(i);
+          i=i+1
+          local idx = getXMLInt(   xmlFile, groupTag.."#id")
+          if idx == nil or idx < 1 or idx > 10 then
+            break
+          end
+          VehicleGroupsSwitcher.groupNames[idx]     = getXMLString(xmlFile, groupTag.."#name")
+          --VehicleGroupsSwitcher.groupsDisabled[idx] = getXMLBool(  xmlFile, groupTag.."#disabled")
+        end
+        xmlFile = nil;
+      end
+    end
+  end
+end
+
+function VehicleGroupsSwitcher.saveGroupNames(self)
+  if g_server ~= nil or g_dedicatedServerInfo ~= nil then
+    local tag="VehicleGroupsSwitcher"
+    local fileName = g_currentMission.missionInfo:getSavegameDirectory(g_currentMission.missionInfo.savegameIndex) .. "/VehicleGroupsSwitcher_Config.XML"
+    local xmlFile = createXMLFile(tag, fileName, tag)
+    for i=1,10 do
+      local groupTag = (tag..".group(%d)"):format(i-1);
+      setXMLInt(   xmlFile, groupTag.."#id", i)
+      setXMLString(xmlFile, groupTag.."#name", VehicleGroupsSwitcher.groupNames[i])
+      --setXMLBool(  xmlFile, groupTag.."#disabled", VehicleGroupsSwitcher.groupsDisabled[i])
+    end
+    saveXMLFile(xmlFile)
+  end
+end
+
 --
 
 function VehicleGroupsSwitcher:loadMap(name)
     if VehicleGroupsSwitcher.initialized > 0 then
         return;
     end;
+    if VehicleGroupsSwitcher.initialized < 0 then
+        g_careerScreen.saveSavegame = Utils.appendedFunction(g_careerScreen.saveSavegame, VehicleGroupsSwitcher.saveGroupNames)
+        g_chatDialog.onSendClick = Utils.overwrittenFunction(g_chatDialog.onSendClick, VehicleGroupsSwitcher.onGroupNameRename)
+    end
     VehicleGroupsSwitcher.initialized = 1; -- Step-1
 --print(tostring(g_currentMission.time).."ms VehicleGroupsSwitcher:loadMap(name)");
+
+--[[FS2013    
+    self.hudBackground = createImageOverlay("dataS2/menu/black.png");
+    setOverlayColor(self.hudBackground, 1,1,1, 0.5);
+    VehicleGroupsSwitcher.bigFontSize   = 0.023;
+    VehicleGroupsSwitcher.smallFontSize = 0.020;
+    VehicleGroupsSwitcher.renderTextWithShade = FS13renderTextWithShade;
+--]]    
+
+--FS2015
+    self.hudBackground = createImageOverlay("dataS2/menu/blank.png");
+    setOverlayColor(self.hudBackground, 0,0,0, 0.5)
+    VehicleGroupsSwitcher.bigFontSize   = 0.020;
+    VehicleGroupsSwitcher.smallFontSize = 0.017;
+    VehicleGroupsSwitcher.renderTextWithShade = FS15renderText;
+--]]
+    --
+    for idx=1,10 do
+      VehicleGroupsSwitcher.groupNames[idx] = g_i18n:getText("group"):format(idx)
+    end
+    VehicleGroupsSwitcher.loadGroupNames()
     --
     self.keyModifier = getKeyIdOfModifier(InputBinding.VEGS_TOGGLE_EDIT);
     
@@ -159,14 +233,13 @@ function VehicleGroupsSwitcher:loadMap(name)
             and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_09)
             and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_10))
     then
+        VehicleGroupsSwitcher.showError = true;
         print("ERROR: One-or-more inputbindings for VehicleGroupsSwitcher do not use the same modifier-key (SHIFT/CTRL/ALT)!");
         return;
     end;
-
--- FS2013    
-    self.hudBackground = createImageOverlay("dataS2/menu/black.png");
-    g_currentMission:addOnUserEventCallback(VehicleGroupsSwitcher.callbackUserEvent, self); -- Patch 2.0.0.4
---]]    
+--
+    g_currentMission:addOnUserEventCallback(VehicleGroupsSwitcher.callbackUserEvent, self);
+    VehicleGroupsSwitcher.showError = false;
 end;
 
 function VehicleGroupsSwitcher:deleteMap()
@@ -176,7 +249,7 @@ function VehicleGroupsSwitcher:deleteMap()
     VehicleGroupsSwitcher.refInspector = nil;
     VehicleGroupsSwitcher.refLoadStatus = nil;
     --
-    g_currentMission:removeOnUserEventCallback(VehicleGroupsSwitcher.callbackUserEvent); -- Patch 2.0.0.4
+    g_currentMission:removeOnUserEventCallback(VehicleGroupsSwitcher.callbackUserEvent);
     delete(self.hudBackground);
     self.hudBackground = nil;
 end;
@@ -235,7 +308,7 @@ function VehicleGroupsSwitcher:update(dt)
         return;
     end;
     --
-    -- Patch 2.0.0.4 - Only "master users" has the ability to move vehicles to different groups.
+    -- Only "master users" has the ability to move vehicles to different groups.
     local isEditingAllowed = (g_server ~= nil);
     if g_server == nil then
         if self.isModifying or ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) or InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT) then 
@@ -271,11 +344,27 @@ function VehicleGroupsSwitcher:update(dt)
             if self.isModifying then
                 local vehGroupOffset = nil;
                 local vehPosOffset = nil;
-                if     InputBinding.hasEvent(InputBinding.MENU_UP)    then vehGroupOffset = -1;
-                elseif InputBinding.hasEvent(InputBinding.MENU_DOWN)  then vehGroupOffset =  1;
-                elseif InputBinding.hasEvent(InputBinding.MENU_LEFT)  then vehPosOffset = -1;
-                elseif InputBinding.hasEvent(InputBinding.MENU_RIGHT) then vehPosOffset =  1;
-                end
+--[[Development
+                if Input.isKeyPressed(Input.KEY_lalt) then
+                  local x=0
+                  if     InputBinding.hasEvent(InputBinding.MENU_LEFT)  then x=-1
+                  elseif InputBinding.hasEvent(InputBinding.MENU_RIGHT) then x=1
+                  end
+                  if g_currentMission.controlledVehicle then
+                    local col = ((g_currentMission.controlledVehicle.modVeGS.group-1) % 5) + 1
+                    local xx = VehicleGroupsSwitcher.hudColumnsPos[col][1]
+                    xx = xx + x/100
+                    VehicleGroupsSwitcher.hudColumnsPos[col][1] = xx
+                  end
+                  renderText(0.5, 0.002, 0.02, tostring(xx))
+                else
+--Development]]
+                  if     InputBinding.hasEvent(InputBinding.MENU_UP)    then vehGroupOffset = -1;
+                  elseif InputBinding.hasEvent(InputBinding.MENU_DOWN)  then vehGroupOffset =  1;
+                  elseif InputBinding.hasEvent(InputBinding.MENU_LEFT)  then vehPosOffset = -1;
+                  elseif InputBinding.hasEvent(InputBinding.MENU_RIGHT) then vehPosOffset =  1;
+                  end
+--                end
                 --
                 if vehGroupOffset ~= nil then
                     local vehObj = g_currentMission.controlledVehicle;
@@ -330,7 +419,7 @@ function VehicleGroupsSwitcher:update(dt)
                     end;
                 end;
                 --
-                if (g_gui.currentGuiName ~= "" and g_gui.currentGuiName ~= nil) then
+                if VehicleGroupsSwitcher.groupIdxToRename == nil and (g_gui.currentGuiName ~= "" and g_gui.currentGuiName ~= nil) then
                     -- If player activates some GUI screen, stop VEGS from rendering
                     self.isModifying = false;
                 else
@@ -340,16 +429,21 @@ function VehicleGroupsSwitcher:update(dt)
                 self.isModifying = true;
             end;
         end;
-        --
-        if self.dirtyTimeout ~= nil and self.dirtyTimeout < g_currentMission.time then
-            self.dirtyTimeout = nil;
-            VehicleGroupsSwitcherEvent.sendEvent();
-        end;
     else
         -- Editing not allowed
         self.isModifying = false;
     end;
-    --
+
+    if self.dirtyTimeout ~= nil and self.dirtyTimeout < g_currentMission.time then
+        self.dirtyTimeout = nil;
+        VehicleGroupsSwitcherEvent.sendEvent();
+        --
+        if VehicleGroupsSwitcher.needToSaveGroupNames then
+          VehicleGroupsSwitcher.needToSaveGroupNames = nil
+          VehicleGroupsSwitcher.saveGroupNames()
+        end
+    end;
+    
     -- This construct is used, so we do not activate other actions that might have been assigned the normal-keys (i.e. 1,2,3...9,0)
     local vegsSwitchTo = nil;
     local multiAction = nil;
@@ -385,12 +479,21 @@ function VehicleGroupsSwitcher:update(dt)
     elseif self.prevAction ~= nil then
         local delay = g_currentMission.time - self.prevAction[2];
         if delay > 800 and delay < 2000 then 
-            -- Keypress was more than 800ms, so it is a group enable/disable
-            local b = VehicleGroupsSwitcher.groupsDisabled[self.prevAction[1]] or false;
-            VehicleGroupsSwitcher.groupsDisabled[self.prevAction[1]] = not b;
-            -- Do not let it change again
-            self.prevAction[2] = self.prevAction[2] - 5000;
+            -- Keypress was more than 800ms, 
+            if self.isModifying then
+                -- and in editing-mode, so rename group-name
+                VehicleGroupsSwitcher.groupIdxToRename = self.prevAction[1]
+                g_gui:showGui("ChatDialog")
+                g_chatDialog.textElement:setText(VehicleGroupsSwitcher.groupNames[VehicleGroupsSwitcher.groupIdxToRename])
+            else
+                -- else it is a group enable/disable
+                local b = VehicleGroupsSwitcher.groupsDisabled[self.prevAction[1]] or false;
+                VehicleGroupsSwitcher.groupsDisabled[self.prevAction[1]] = not b;
+                -- Do not let it change again
+                self.prevAction[2] = self.prevAction[2] - 5000;
+            end
         end;
+        -- Has key been released?
         if multiAction == nil then
             if delay < 800 then
                 -- Keypress was less than 800ms, so it is a vehicle switch
@@ -465,31 +568,75 @@ function VehicleGroupsSwitcher:update(dt)
     if foundVehObj then
         g_client:getServerConnection():sendEvent(VehicleEnterRequestEvent:new(foundVehObj, g_settingsNickname));
     end;
+    
+    -- FS15, 'crouch' work-around.
+    if g_currentMission.controlledVehicle ~= nil and g_currentMission.controlledVehicle.isEntered then
+        -- In vehicle
+        VehicleGroupsSwitcher.showingVeGS = self.isModifying or ((self.keyModifier ~= nil) and (Input.isKeyPressed(self.keyModifier)));    
+    else
+        -- When on-foot, require double-tab on CTRL  .. I.e. <CTRL>, release within 500ms, <CTRL>-and-hold
+        if (self.keyModifier ~= nil) then
+          if self.crouchDelay == nil then 
+            if Input.isKeyPressed(self.keyModifier) then
+              self.crouchDelay = -500
+            end
+          elseif self.crouchDelay <= 0 then
+            self.crouchDelay = math.min(0, self.crouchDelay + dt)
+            if not Input.isKeyPressed(self.keyModifier) then
+              if self.crouchDelay == 0 then
+                self.crouchDelay = nil
+              else
+                self.crouchDelay = 1
+              end
+            end
+          elseif self.crouchDelay > 0 then
+            self.crouchDelay = self.crouchDelay + dt
+            if Input.isKeyPressed(self.keyModifier) then
+              VehicleGroupsSwitcher.showingVeGS = true
+            else
+              VehicleGroupsSwitcher.showingVeGS = false
+              if self.crouchDelay > 500 then
+                self.crouchDelay = nil
+              end
+            end
+          end
+        end
+    end
 end;
 
-function renderTextWithShade(x,y, textSize, forecolor, text)
-    setTextColor(unpack(VehicleGroupsSwitcher.fontShadeColor));
-    renderText(x + (textSize/20), y - (textSize/10), textSize, text);
-    setTextColor(unpack(forecolor));
-    renderText(x, y, textSize, text);
-end;
+function VehicleGroupsSwitcher:getTipText()
+    if self.tipTime == nil or self.tipTime < g_currentMission.time then
+      self.tipTime = g_currentMission.time + 7000
+      self.currentTipIdx = Utils.getNoNil(self.currentTipIdx,0) + Utils.getNoNil(self.currentTipDirection,1)
+      local i18nText = ("tip%d"):format(self.currentTipIdx)
+      if not g_i18n:hasText(i18nText) then
+        if Utils.getNoNil(self.currentTipDirection,1) > 0 and self.isModifying then
+          self.currentTipIdx = -1
+          self.currentTipDirection = -1
+        else
+          self.currentTipIdx = 1
+          self.currentTipDirection = 1
+        end
+      end
+    else
+      local i18nText = ("tip%d"):format(self.currentTipIdx)
+      return g_i18n:getText(i18nText)
+    end
+    return nil
+end
 
 function VehicleGroupsSwitcher:draw()
-    if self.initialized < 1 then
+    if VehicleGroupsSwitcher.showError then
         if InputBinding.isPressed(InputBinding.VEGS_TOGGLE_EDIT) then
             setTextAlignment(RenderText.ALIGN_CENTER);
-            renderTextWithShade(0.5, 0.7, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("ControlsError"));
+            VehicleGroupsSwitcher.renderTextWithShade(0.5, 0.7, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("ControlsError"));
         end;
         return;
     end;
     --
-    VehicleGroupsSwitcher.showingVeGS = self.isModifying or ((self.keyModifier ~= nil) and (Input.isKeyPressed(self.keyModifier)));
     if VehicleGroupsSwitcher.showingVeGS then
-        local slots = {}
+        local slots = { {},{},{},{},{},{},{},{},{},{} }
         local unassigned = {}
-        for idx=1,10 do
-            slots[idx] = {}
-        end;
         for idx,vehObj in pairs(g_currentMission.steerables) do
             if vehObj.modVeGS ~= nil and vehObj.modVeGS.group ~= nil and vehObj.modVeGS.group >= 1 and vehObj.modVeGS.group <= 10 then
                 if vehObj.modVeGS.pos == nil then
@@ -500,89 +647,90 @@ function VehicleGroupsSwitcher:draw()
                 table.insert(unassigned, vehObj);
             end;
         end;
+        local slotsHeight = {}
         for idx=1,10 do
             table.sort(slots[idx], function(l,r) return l.modVeGS.pos < r.modVeGS.pos; end);
+            slotsHeight[idx] = VehicleGroupsSwitcher.bigFontSize + (table.getn(slots[idx]) * VehicleGroupsSwitcher.smallFontSize)
         end;
         --
-        local xPos = 0.5;
-        local yPos = VehicleGroupsSwitcher.hudPosSize.y;
-        local yPosLowest = 0.5;
+        local col1Height,col2Height = 0,0
+        if self.isModifying then
+            col2Height = VehicleGroupsSwitcher.bigFontSize + (table.getn(unassigned) * VehicleGroupsSwitcher.smallFontSize)
+        end
+        for idx=1,5 do
+          col1Height = col1Height + slotsHeight[idx]
+          col2Height = col2Height + slotsHeight[11 - idx]
+        end
+
+        local slotColumnSplitIdx = 6
+        local maxCalculations = 5
+        while (maxCalculations > 0 and slotColumnSplitIdx > 2 and slotColumnSplitIdx < 10) do
+            maxCalculations = maxCalculations - 1
+            local diffHeight = math.abs(col1Height - col2Height)
+            if (diffHeight <= 0.01) then
+                maxCalculations=0
+            elseif (col1Height < col2Height) then
+                local tmp1 = col1Height + slotsHeight[slotColumnSplitIdx]
+                local tmp2 = col2Height - slotsHeight[slotColumnSplitIdx]
+                if (math.abs(tmp1 - tmp2) < diffHeight) then
+                    col1Height = tmp1
+                    col2Height = tmp2
+                    slotColumnSplitIdx=slotColumnSplitIdx+1
+                else
+                    maxCalculations=0
+                end
+            elseif (col1Height > col2Height) then
+                local tmp1 = col1Height - slotsHeight[slotColumnSplitIdx-1]
+                local tmp2 = col2Height + slotsHeight[slotColumnSplitIdx-1]
+                if (math.abs(tmp1 - tmp2) < diffHeight) then
+                    col1Height = tmp1
+                    col2Height = tmp2
+                    slotColumnSplitIdx=slotColumnSplitIdx-1
+                else
+                    maxCalculations=0
+                end
+            end
+        end
         --
--- FS2013        
+        local xPos,yPos = unpack(VehicleGroupsSwitcher.hudTitlePos)
+        --
         if self.hudBackground ~= nil then
-            setOverlayColor(self.hudBackground, 1,1,1, 0.5);
-            renderOverlay(self.hudBackground, 0.0,0.33, 1.0,0.50);
+            renderOverlay(self.hudBackground, unpack(VehicleGroupsSwitcher.hudOverlayPosSize));
         end;
---]]
         --
         setTextBold(true);
         setTextAlignment(RenderText.ALIGN_CENTER);
-        renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("VEGS"));
+        VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("VEGS"));
+
+        local tipTxt = self:getTipText()
+        if tipTxt ~= nil then
+          setTextBold(false);
+          yPos = yPos - VehicleGroupsSwitcher.smallFontSize * 0.8
+          VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.smallFontSize * 0.7, VehicleGroupsSwitcher.fontDisabledColor, tipTxt);
+        end
         setTextAlignment(RenderText.ALIGN_LEFT);
         --
+        xPos,yPos = unpack(VehicleGroupsSwitcher.hudColumnsPos[1])
         for idx=1,10 do
-            if idx == 1 then
-                xPos = VehicleGroupsSwitcher.hudPosSize.x1;
-                yPos = VehicleGroupsSwitcher.hudPosSize.y - VehicleGroupsSwitcher.smallFontSize;
-            elseif idx == 6 then
-                yPosLowest = math.min(yPos, yPosLowest);
-                xPos = VehicleGroupsSwitcher.hudPosSize.x2;
-                yPos = VehicleGroupsSwitcher.hudPosSize.y - VehicleGroupsSwitcher.smallFontSize;
+            if idx == slotColumnSplitIdx then
+                xPos,yPos = unpack(VehicleGroupsSwitcher.hudColumnsPos[2])
             end;
             --
             setTextBold(true);
             yPos = yPos - VehicleGroupsSwitcher.bigFontSize;
             local grpColor = VehicleGroupsSwitcher.groupsDisabled[idx]==true and VehicleGroupsSwitcher.fontDisabledColor or VehicleGroupsSwitcher.fontColor;
-            renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.bigFontSize, grpColor, string.format(g_i18n:getText("group"), idx));
+            VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.bigFontSize, grpColor, g_i18n:getText("groupLabel"):format(idx%10, VehicleGroupsSwitcher.groupNames[idx]));
             --
             setTextBold(false);
             for _,vehObj in pairs(slots[idx]) do
-                local color = (vehObj.isEntered and VehicleGroupsSwitcher.fontSelectedColor or grpColor); --VehicleGroupsSwitcher.fontColor);
+                local color = (vehObj.isEntered and VehicleGroupsSwitcher.fontSelectedColor or grpColor);
                 yPos = yPos - VehicleGroupsSwitcher.smallFontSize;
-                --local vehName = string.format("%d) ", vehObj.modVeGS.pos)..tostring(vehObj.name);
-                renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, tostring(vehObj:getVehicleName()));
+                VehicleGroupsSwitcher.renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, tostring(vehObj:getVehicleName()));
                 --
                 if vehObj.isControlled
                 or vehObj.isHired  -- Hired helper
-                or (vehObj.drive ~= nil and vehObj.drive == true)  -- CoursePlay
-                then
-                    local txt;
-                    if vehObj.isControlled then
-                        txt = vehObj.controllerName;
-                        if txt == nil then
-                            txt = g_i18n:getText("player");
-                        end;
-                    elseif vehObj.isHired then
-                        txt = g_i18n:getText("hired");
-                    elseif (vehObj.drive ~= nil and vehObj.drive == true) then
-                        txt = g_i18n:getText("courseplay");
-                    else
-                        txt = g_i18n:getText("unknown");
-                    end;
-                    setTextAlignment(RenderText.ALIGN_RIGHT);
-                    renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.smallFontSize, color, txt);
-                    setTextAlignment(RenderText.ALIGN_LEFT);
-                end;
-            end;
-        end;
-        --
-        if self.isModifying then
-            xPos = VehicleGroupsSwitcher.hudPosSize.x;
-            yPos = math.min(yPos, yPosLowest);
-            --
-            setTextBold(true);
-            yPos = yPos - VehicleGroupsSwitcher.bigFontSize;
-            renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("unassigned"));
-            --
-            setTextBold(false);
-            for _,vehObj in pairs(unassigned) do
-                local color = (vehObj.isEntered and VehicleGroupsSwitcher.fontSelectedColor or VehicleGroupsSwitcher.fontColor);
-                yPos = yPos - VehicleGroupsSwitcher.smallFontSize;
-                renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, tostring(vehObj:getVehicleName()));
-                --
-                if vehObj.isControlled
-                or vehObj.isHired  -- Hired helper
-                or (vehObj.drive ~= nil and vehObj.drive == true)  -- CoursePlay
+                or (vehObj.drive ~= nil and vehObj.drive == true)  -- CoursePlay (old)
+                or (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving())  -- CoursePlay (v4.00.0056)
                 or (vehObj.modFM ~= nil and vehObj.modFM.FollowVehicleObj ~= nil) -- FollowMe
                 then
                     local txt;
@@ -593,7 +741,8 @@ function VehicleGroupsSwitcher:draw()
                         end;
                     elseif vehObj.isHired then
                         txt = g_i18n:getText("hired");
-                    elseif (vehObj.drive ~= nil and vehObj.drive == true) then
+                    elseif (vehObj.drive ~= nil and vehObj.drive == true)  -- CoursePlay (old)
+                        or (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving()) then -- CoursePlay (v4.00.0056)
                         txt = g_i18n:getText("courseplay");
                     elseif (vehObj.modFM ~= nil and vehObj.modFM.FollowVehicleObj ~= nil) then
                         txt = g_i18n:getText("followme");
@@ -601,7 +750,47 @@ function VehicleGroupsSwitcher:draw()
                         txt = g_i18n:getText("unknown");
                     end;
                     setTextAlignment(RenderText.ALIGN_RIGHT);
-                    renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.smallFontSize, color, txt);
+                    VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.smallFontSize, color, txt);
+                    setTextAlignment(RenderText.ALIGN_LEFT);
+                end;
+            end;
+        end;
+        --
+        if self.isModifying then
+            setTextBold(true);
+            yPos = yPos - VehicleGroupsSwitcher.bigFontSize;
+            VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("unassigned"));
+            --
+            setTextBold(false);
+            for _,vehObj in pairs(unassigned) do
+                local color = (vehObj.isEntered and VehicleGroupsSwitcher.fontSelectedColor or VehicleGroupsSwitcher.fontColor);
+                yPos = yPos - VehicleGroupsSwitcher.smallFontSize;
+                VehicleGroupsSwitcher.renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, tostring(vehObj:getVehicleName()));
+                --
+                if vehObj.isControlled
+                or vehObj.isHired  -- Hired helper
+                or (vehObj.drive ~= nil and vehObj.drive == true)  -- CoursePlay
+                or (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving())  -- CoursePlay (v4.00.0056)
+                or (vehObj.modFM ~= nil and vehObj.modFM.FollowVehicleObj ~= nil) -- FollowMe
+                then
+                    local txt;
+                    if vehObj.isControlled then
+                        txt = vehObj.controllerName;
+                        if txt == nil then
+                            txt = g_i18n:getText("player");
+                        end;
+                    elseif vehObj.isHired then
+                        txt = g_i18n:getText("hired");
+                    elseif (vehObj.drive ~= nil and vehObj.drive == true)  -- CoursePlay (old)
+                        or (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving()) then -- CoursePlay (v4.00.0056)
+                        txt = g_i18n:getText("courseplay");
+                    elseif (vehObj.modFM ~= nil and vehObj.modFM.FollowVehicleObj ~= nil) then
+                        txt = g_i18n:getText("followme");
+                    else
+                        txt = g_i18n:getText("unknown");
+                    end;
+                    setTextAlignment(RenderText.ALIGN_RIGHT);
+                    VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.smallFontSize, color, txt);
                     setTextAlignment(RenderText.ALIGN_LEFT);
                 end;
             end;
@@ -613,7 +802,7 @@ end;
 function VehicleGroupsSwitcher.loadFromAttributesAndNodes(self, superFunc, xmlFile, key, resetVehicles)
     self.modVeGS = {group=0, pos=0};
     --
-    if not resetVehicles and g_server ~= nil then
+    if --[[not resetVehicles and]] g_server ~= nil then
         local vegsGrpPos = getXMLString(xmlFile, key .. string.format("#vegsGrpPos"));
         if vegsGrpPos ~= nil then
             local parts = Utils.splitString(";", vegsGrpPos);
@@ -632,9 +821,9 @@ function VehicleGroupsSwitcher.loadFromAttributesAndNodes(self, superFunc, xmlFi
                 end;
             end;
             -- TODO: group-names
-        else
-            -- Attempt to read 'VeGS v0.92' setting.
-            self.modVeGS.group = Utils.getNoNil(getXMLInt(xmlFile, key .. string.format("#vegs_group")), 0);
+        --else
+        --    -- Attempt to read 'VeGS v0.92' setting.
+        --    self.modVeGS.group = Utils.getNoNil(getXMLInt(xmlFile, key .. string.format("#vegs_group")), 0);
         end;
     end;
     --
@@ -682,47 +871,61 @@ end;
 function VehicleGroupsSwitcherEvent:writeStream(streamId, connection)
 --print(tostring(g_currentMission.time).. "ms - VehicleGroupsSwitcherEvent:writeStream(streamId, connection)");
     local cnt = Utils.clamp(table.getn(g_currentMission.steerables), 0, 127);
-    -- v0.97
     if self.isRefreshRequest then
         -- Magic number zero means "request a refresh"
         cnt = 0;
     end;
     -- Do not rely on that the peers may have the same number of steerables in their array! So tell how many we are going to send now.
     streamWriteInt8(streamId, cnt); -- If more than 127 steerables, then this will be a problem!
-    for i=1,cnt do
-        local vegsGroup = 0;
-        local vegsPos = 0;
-        if g_currentMission.steerables[i].modVeGS ~= nil then
-            vegsGroup = Utils.clamp(g_currentMission.steerables[i].modVeGS.group, 0, 15);
-            vegsPos   = Utils.clamp(g_currentMission.steerables[i].modVeGS.pos, 0, 15);
-        end;
-        local id = networkGetObjectId(g_currentMission.steerables[i]);
-        streamWriteInt32(streamId, id);
-        streamWriteUIntN(streamId, vegsGroup, 4);
-        streamWriteUIntN(streamId, vegsPos,   4); -- 0-15, if more than 15 in a group, this will be a problem.
---print(tostring(id).." / "..tostring(vegsGroup) .." / ".. tostring(vegsPos));
+    if cnt > 0 then
+      for i=1,10 do
+        streamWriteString(streamId, VehicleGroupsSwitcher.groupNames[i])
+      end
+      for i=1,cnt do
+          local vegsGroup = 0;
+          local vegsPos = 0;
+          if g_currentMission.steerables[i].modVeGS ~= nil then
+              vegsGroup = Utils.clamp(g_currentMission.steerables[i].modVeGS.group, 0, 15);
+              vegsPos   = Utils.clamp(g_currentMission.steerables[i].modVeGS.pos, 0, 15);
+          end;
+          local id = networkGetObjectId(g_currentMission.steerables[i]);
+          streamWriteInt32(streamId, id);
+          streamWriteUIntN(streamId, vegsGroup, 4);
+          streamWriteUIntN(streamId, vegsPos,   4); -- 0-15, if more than 15 in a group, this will be a problem.
+  --print(tostring(id).." / "..tostring(vegsGroup) .." / ".. tostring(vegsPos));
+      end
     end
 end;
 
 function VehicleGroupsSwitcherEvent:readStream(streamId, connection)
 --print(tostring(g_currentMission.time).. "ms - VehicleGroupsSwitcherEvent:readStream(streamId, connection)");
+    local wasDirty = false
     local cnt = streamReadInt8(streamId);
-    for i=1,cnt do
-        local id = streamReadInt32(streamId);
-        local vegsGroup = streamReadUIntN(streamId, 4);
-        local vegsPos   = streamReadUIntN(streamId, 4);
-        local vehObj = networkGetObject(id);
-        if vehObj ~= nil then
-            if vehObj.modVeGS == nil then
-                vehObj.modVeGS = {}
-            end;
-            vehObj.modVeGS.group = vegsGroup;
-            vehObj.modVeGS.pos   = vegsPos;
-            -- Will cause a race-condition, when another player also is in VeGS' edit-mode.
-        end;
-    end;
+    if cnt > 0 then
+      for i=1,10 do
+        local newName = streamReadString(streamId)
+        wasDirty = wasDirty or (VehicleGroupsSwitcher.groupNames[i] ~= newName)
+        VehicleGroupsSwitcher.groupNames[i] = newName
+      end
+      for i=1,cnt do
+          local id = streamReadInt32(streamId);
+          local vegsGroup = streamReadUIntN(streamId, 4);
+          local vegsPos   = streamReadUIntN(streamId, 4);
+          local vehObj = networkGetObject(id);
+          if vehObj ~= nil then
+              if vehObj.modVeGS == nil then
+                  vehObj.modVeGS = {}
+                  wasDirty = true
+              end;
+              wasDirty = wasDirty or (vehObj.modVeGS.group ~= vegsGroup) or (vehObj.modVeGS.pos ~= vegsPos);
+              vehObj.modVeGS.group = vegsGroup;
+              vehObj.modVeGS.pos   = vegsPos;
+              -- Will cause a race-condition, when another player also is in VeGS' edit-mode.
+          end;
+      end;
+    end
     -- Was it a refresh-request, and we are the server?
-    if cnt == 0 and g_server ~= nil then
+    if g_server ~= nil and (wasDirty or cnt == 0)  then
 --print(tostring(g_currentMission.time).."ms VehicleGroupsSwitcherEvent:readStream(streamId, connection) refresh request");
         -- Just broadcast to all players...
         VehicleGroupsSwitcher.dirtyTimeout = g_currentMission.time + 2000
@@ -739,7 +942,6 @@ function VehicleGroupsSwitcherEvent.sendEvent(isRefreshRequest, noEventSend)
     end;
 end;
 
--- Patch 2.0.0.4
 function VehicleGroupsSwitcher:callbackUserEvent()
 --print(tostring(g_currentMission.time).."ms VehicleGroupsSwitcher:callbackUserEvent() g_server==nil:"..tostring(g_server == nil));
     if g_server == nil and not VehicleGroupsSwitcher.hasRefreshedOnJoin then
