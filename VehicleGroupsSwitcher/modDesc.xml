@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="13">
+    <author>Decker_MMIV</author>
+    <version>1.0.98</version>
+    <title>
+        <en>VeG-S - VehicleGroups Switcher</en>
+        <de>VeG-S - VehicleGroups Switcher</de>
+        <fr>VeG-S - VehicleGroups Switcher</fr>
+        <pl>VeG-S - VehicleGroups Switcher</pl>
+    </title>
+    <description>
+        <en>
+<![CDATA[Put your fleet of vehicles into more manageable groups, and
+switch within the group only.
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </en>
+        <de> <!-- translation by fribex -->
+<![CDATA[Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und
+wechseln Sie nur noch innerhalb der Gruppe.
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </de>
+        <fr> <!-- http://translate.google.com - english to french translation -->
+<![CDATA[Mettez votre flotte de véhicules en groupes plus faciles à gérer, et
+passer dans le seul groupe.
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </fr>
+        <pl> <!-- http://translate.google.com - english to polish translation -->
+<![CDATA[Połóż swoją flotę pojazdów na bardziej przystępne grupy, a
+przełączyć się w grupie.
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </pl>
+    </description>
+
+    <iconFilename>store_VehicleGroupsSwitcher.dds</iconFilename>
+    <multiplayer supported="true" />
+    
+    <extraSourceFiles>
+      <sourceFile filename="VehicleGroupsSwitcher.lua" />
+    </extraSourceFiles>
+
+    <l10n>
+        <text name="VEGS">
+            <en>== VeG-S - VehicleGroups Switcher ==</en>
+            <de>== VeG-S - VehicleGroups Switcher ==</de>
+            <fr>== VeG-S - VehicleGroups Switcher ==</fr>
+            <pl>== VeG-S - VehicleGroups Switcher ==</pl>
+        </text>
+        
+        <text name="ControlsError">
+            <en>
+<![CDATA[VeG-S: Problem with input-bindings!
+
+Please assign the same key-modifier to all the
+'Group 1 .. 10' and 'Toggle edit-mode'
+actions for the VeG-S mod, in Options->Controls.
+
+A key-modifier is SHIFT, CTRL or ALT.]]>        
+            </en>
+            <de> <!-- translation by fribex -->
+<![CDATA[VeG-S: Problem mit den 'input-bindings'!
+
+Bitte weisen Sie im Fenster 'Optionen->Steuerung' allen 'VeG-S'-Einträgen die gleiche Zusatztaste zu.
+
+Mögliche Zusatztasten: SHIFT, STRG oder ALT.]]>        
+            </de>
+            <fr> <!-- http://translate.google.com - english to french translation -->
+<![CDATA[VeG-S: un problème d'entrée-bindings!
+
+S'il vous plaît assigner la même touche modificateur à tous les
+'Groupe 1 .. 10' et 'Basculer en mode édition'
+actions pour le mod VeG-S, dans Options->Commandes.
+
+Une clé-modificateur est SHIFT, CTRL ou ALT.]]>        
+            </fr>
+            <pl> <!-- http://translate.google.com - english to polish translation -->
+<![CDATA[VeG-S: Problem z wejściem-wiązań!
+
+Proszę przypisać ten sam klucz-modyfikator do wszystkich
+'Grupa 1 .. 10' oraz 'Przełączanie trybu edycji'
+działania na VeG-S mod, w Opcje->Controls.
+
+Key-modyfikator jest SHIFT, CTRL lub ALT.]]>        
+            </pl>
+        </text>
+        
+        <text name="group">
+            <en>Group %d </en>
+            <de>Gruppe %d</de>
+            <fr>Groupe %d</fr>
+            <pl>Grupa %d </pl>
+        </text>
+        <text name="unassigned">
+            <en>Unassigned   </en>
+            <de>Unbelegt     </de>
+            <fr>Non affecté  </fr>
+            <pl>Nieprzypisane</pl>
+        </text>
+        <text name="editGroupUp">
+            <en>VeG-S: Move to previous group      </en>
+            <de>VeG-S: Zum vorherigen Gruppe       </de>
+            <fr>VeG-S: Déplacer groupe précédent   </fr>
+            <pl>VeG-S: Przejść do poprzedniej grupy</pl>
+        </text>
+        <text name="editGroupDown">
+            <en>VeG-S: Move to next group        </en>
+            <de>VeG-S: Zur nächsten Gruppe       </de>
+            <fr>VeG-S: Déplacer groupe suivant   </fr>
+            <pl>VeG-S: Przejść do następnej grupy</pl>
+        </text>
+        <text name="editPosUp">
+            <en>VeG-S: Move up within group             </en>
+            <de>VeG-S: Move up innerhalb der Gruppe     </de> <!-- translate.google.com -->
+            <fr>VeG-S: Déplacez-vous au sein du groupe  </fr> <!-- translate.google.com -->
+            <pl>VeG-S: Przenieś się w ramach grupy      </pl> <!-- translate.google.com -->
+        </text>
+        <text name="editPosDown">
+            <en>VeG-S: Move down within group           </en>
+            <de>VeG-S: Nach unten innerhalb der Gruppe  </de> <!-- translate.google.com -->
+            <fr>VeG-S: Descendre au sein du groupe      </fr> <!-- translate.google.com -->
+            <pl>VeG-S: Przenieś w dół w obrębie grupy   </pl> <!-- translate.google.com -->
+        </text>
+
+                                                       <!-- fribex -->
+        <text name="player"    ><en>(player)    </en><de>(Spieler)   </de><fr>(player)    </fr><pl>(player)    </pl></text>
+        <text name="hired"     ><en>(hired)     </en><de>(versteckt) </de><fr>(hired)     </fr><pl>(hired)     </pl></text>
+        <text name="courseplay"><en>(courseplay)</en><de>(courseplay)</de><fr>(courseplay)</fr><pl>(courseplay)</pl></text>
+        <text name="followme"  ><en>(followme)  </en><de>(followme)  </de><fr>(followme)  </fr><pl>(followme)  </pl></text>
+        <text name="unknown"   ><en>(?)         </en><de>(unbekannt) </de><fr>(?)         </fr><pl>(?)         </pl></text>
+
+                                                                            <!-- fribex -->
+        <text name="VEGS_GRP_TAB"    ><en>VeG-S: Switch within group</en><de>VeG-S: Schalten innerh. der Gruppe  </de><fr>VeG-S: Arbitrage au sein du groupe</fr><pl>VeG-S: Przełącz się w ramach grupy</pl></text>
+        <text name="VEGS_GRP_NXT"    ><en>VeG-S: To next group      </en><de>VeG-S: Zum nächsten Gruppe          </de><fr>VeG-S: Pour le groupe suivant     </fr><pl>VeG-S: Do następnej grupy         </pl></text>
+        <text name="VEGS_GRP_01"     ><en>VeG-S: Group 1            </en><de>VeG-S: Gruppe 1                     </de><fr>VeG-S: Groupe 1                   </fr><pl>VeG-S: Grupa 1                    </pl></text>
+        <text name="VEGS_GRP_02"     ><en>VeG-S: Group 2            </en><de>VeG-S: Gruppe 2                     </de><fr>VeG-S: Groupe 2                   </fr><pl>VeG-S: Grupa 2                    </pl></text>
+        <text name="VEGS_GRP_03"     ><en>VeG-S: Group 3            </en><de>VeG-S: Gruppe 3                     </de><fr>VeG-S: Groupe 3                   </fr><pl>VeG-S: Grupa 3                    </pl></text>
+        <text name="VEGS_GRP_04"     ><en>VeG-S: Group 4            </en><de>VeG-S: Gruppe 4                     </de><fr>VeG-S: Groupe 4                   </fr><pl>VeG-S: Grupa 4                    </pl></text>
+        <text name="VEGS_GRP_05"     ><en>VeG-S: Group 5            </en><de>VeG-S: Gruppe 5                     </de><fr>VeG-S: Groupe 5                   </fr><pl>VeG-S: Grupa 5                    </pl></text>
+        <text name="VEGS_GRP_06"     ><en>VeG-S: Group 6            </en><de>VeG-S: Gruppe 6                     </de><fr>VeG-S: Groupe 6                   </fr><pl>VeG-S: Grupa 6                    </pl></text>
+        <text name="VEGS_GRP_07"     ><en>VeG-S: Group 7            </en><de>VeG-S: Gruppe 7                     </de><fr>VeG-S: Groupe 7                   </fr><pl>VeG-S: Grupa 7                    </pl></text>
+        <text name="VEGS_GRP_08"     ><en>VeG-S: Group 8            </en><de>VeG-S: Gruppe 8                     </de><fr>VeG-S: Groupe 8                   </fr><pl>VeG-S: Grupa 8                    </pl></text>
+        <text name="VEGS_GRP_09"     ><en>VeG-S: Group 9            </en><de>VeG-S: Gruppe 9                     </de><fr>VeG-S: Groupe 9                   </fr><pl>VeG-S: Grupa 9                    </pl></text>
+        <text name="VEGS_GRP_10"     ><en>VeG-S: Group 10           </en><de>VeG-S: Gruppe 10                    </de><fr>VeG-S: Groupe 10                  </fr><pl>VeG-S: Grupa 10                   </pl></text>
+        <text name="VEGS_TOGGLE_EDIT"><en>VeG-S: Toggle edit-mode   </en><de>VeG-S: Editiermodus ein/aus         </de><fr>VeG-S: Basculer en mode édition   </fr><pl>VeG-S: Przełączanie trybu edycji  </pl></text>
+    </l10n>
+
+    <inputBindings>    
+        <input name="VEGS_GRP_TAB"     category="VEHICLE"        key1=""                key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_NXT"     category="VEHICLE"        key1=""                key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_01"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_1" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_02"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_2" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_03"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_3" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_04"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_4" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_05"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_5" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_06"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_6" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_07"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_7" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_08"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_8" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_09"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_9" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_GRP_10"      category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_0" key2="" button="" device="0" mouse="" />
+        <input name="VEGS_TOGGLE_EDIT" category="ONFOOT VEHICLE" key1="KEY_lctrl KEY_e" key2="" button="" device="0" mouse="" />
+    </inputBindings>
+</modDesc>
