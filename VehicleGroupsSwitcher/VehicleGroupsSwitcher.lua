@@ -627,10 +627,13 @@ end
 
 function VehicleGroupsSwitcher:draw()
     if VehicleGroupsSwitcher.showError then
-        if InputBinding.isPressed(InputBinding.VEGS_TOGGLE_EDIT) then
-            setTextAlignment(RenderText.ALIGN_CENTER);
-            VehicleGroupsSwitcher.renderTextWithShade(0.5, 0.7, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("ControlsError"));
-        end;
+        --if InputBinding.isPressed(InputBinding.VEGS_TOGGLE_EDIT) then
+        --    setTextAlignment(RenderText.ALIGN_CENTER);
+        --    VehicleGroupsSwitcher.renderTextWithShade(0.5, 0.7, VehicleGroupsSwitcher.bigFontSize, VehicleGroupsSwitcher.fontColor, g_i18n:getText("ControlsError"));
+        --end;
+        if InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT) then
+            g_currentMission.inGameMessage:showMessage(g_i18n:getText("ControlsErrorTitle"), g_i18n:getText("ControlsError"), 10000);
+        end
         return;
     end;
     --

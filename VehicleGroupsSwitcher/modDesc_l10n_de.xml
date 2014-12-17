@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
+    <description>
+<![CDATA[Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und
+wechseln Sie nur noch innerhalb der Gruppe.
+
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+    </description>
+        
     <texts>
         <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
 
