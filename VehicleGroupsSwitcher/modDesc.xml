@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="21">
     <author>Freelance Modding Crew</author>
-    <version>2.0.7</version>
-    <contributors></contributors>
+    <contributors>xno</contributors>
+
+    <version>2.0.8</version>
     
     <title>
         <en>Vehicle-groups Switcher - 'VeGS'</en>
@@ -27,7 +28,7 @@ wechseln Sie nur noch innerhalb der Gruppe.
 
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </de>
-        <fr> <!-- http://translate.google.com - english to french translation -->
+        <fr>
 <![CDATA[Mettez votre flotte de véhicules en groupes plus faciles à gérer, et
 passer dans le seul groupe.
 
@@ -41,7 +42,7 @@ passa da uno all'altro all'interno del gruppo.
 
 Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
         </it>
-        <pl> <!-- http://translate.google.com - english to polish translation -->
+        <pl>
 <![CDATA[Połóż swoją flotę pojazdów na bardziej przystępne grupy, a
 przełączyć się w grupie.
 
