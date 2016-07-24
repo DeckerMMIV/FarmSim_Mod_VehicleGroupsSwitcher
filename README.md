@@ -2,9 +2,11 @@
 
 To read more about this mod, find it on;
 - http://fs-uk.com - http://fs-uk.com/mods/list/team/45
-- http://modcentral.co.uk - http://modcentral.co.uk/forum/index.php?resources/authors/decker_mmiv.18/
+- http://modcentral.co.uk - http://modcentral.co.uk/resources/authors/decker_mmiv.18/
 
 ## Change-log
+2.2.0
+- Fix: Screen resolution aspect ratio
 
 2.0.11
 - Misc. minor description changes
