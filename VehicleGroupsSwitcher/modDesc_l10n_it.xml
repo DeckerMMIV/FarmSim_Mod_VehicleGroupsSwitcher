@@ -47,18 +47,23 @@ passa da uno all'altro all'interno del gruppo.
         <text name="followme"           text="(followme)" />
         <text name="unknown"            text="(?)" />
 
-        <text name="VEGS_GRP_TAB"       text="VeGS: Cambia dentro un gruppo" />
-        <text name="VEGS_GRP_NXT"       text="VeGS: Vai al prossimo gruppo" />
-        <text name="VEGS_GRP_01"        text="VeGS: Gruppo 1" />
-        <text name="VEGS_GRP_02"        text="VeGS: Gruppo 2" />
-        <text name="VEGS_GRP_03"        text="VeGS: Gruppo 3" />
-        <text name="VEGS_GRP_04"        text="VeGS: Gruppo 4" />
-        <text name="VEGS_GRP_05"        text="VeGS: Gruppo 5" />
-        <text name="VEGS_GRP_06"        text="VeGS: Gruppo 6" />
-        <text name="VEGS_GRP_07"        text="VeGS: Gruppo 7" />
-        <text name="VEGS_GRP_08"        text="VeGS: Gruppo 8" />
-        <text name="VEGS_GRP_09"        text="VeGS: Gruppo 9" />
-        <text name="VEGS_GRP_10"        text="VeGS: Gruppo 10" />
-        <text name="VEGS_TOGGLE_EDIT"   text="VeGS: Attiva modalità modifica" />
+        <text name="input_VEGS_GRP_TAB"       text="VeGS: Cambia dentro un gruppo" />
+        <text name="input_VEGS_GRP_NXT"       text="VeGS: Vai al prossimo gruppo" />
+        <text name="input_VEGS_GRP_01"        text="VeGS: Gruppo 1" />
+        <text name="input_VEGS_GRP_02"        text="VeGS: Gruppo 2" />
+        <text name="input_VEGS_GRP_03"        text="VeGS: Gruppo 3" />
+        <text name="input_VEGS_GRP_04"        text="VeGS: Gruppo 4" />
+        <text name="input_VEGS_GRP_05"        text="VeGS: Gruppo 5" />
+        <text name="input_VEGS_GRP_06"        text="VeGS: Gruppo 6" />
+        <text name="input_VEGS_GRP_07"        text="VeGS: Gruppo 7" />
+        <text name="input_VEGS_GRP_08"        text="VeGS: Gruppo 8" />
+        <text name="input_VEGS_GRP_09"        text="VeGS: Gruppo 9" />
+        <text name="input_VEGS_GRP_10"        text="VeGS: Gruppo 10" />
+        <text name="input_VEGS_TOGGLE_EDIT"   text="VeGS: Attiva modalità modifica" />
+        
+        <text name="VEGS_GRP_TAB"             text="VeGS: Cambia dentro un gruppo" />
+        <text name="VEGS_GRP_NXT"             text="VeGS: Vai al prossimo gruppo" />
+        <text name="VEGS_TOGGLE_EDIT"         text="VeGS: Attiva modalità modifica" />
+        
     </texts>
 </l10n>

@@ -1,8 +1,9 @@
 --
--- Vehicle-groups Switcher (VeGS)
+-- VehicleGroupsSwitcher (VeGS)
 --
--- @author  Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com
--- @date    2012-11-17
+-- @author  Decker_MMIV (DCK)
+-- @contact fs-uk.com, modcentral.co.uk, forum.farming-simulator.com
+-- @date    2016-11-xx
 --
 
 
@@ -40,16 +41,27 @@ addModEventListener(VehicleGroupsSwitcher);
 --
 --
 
-function VehicleGroupsSwitcher_Steerable_PostLoad(self, xmlFile)
-  if self.name == nil or self.realVehicleName == nil then
-    self.name = Utils.getXMLI18N(xmlFile, "vehicle.name", "", "(unidentified vehicle)", self.customEnvironment);
-  end
+function VehicleGroupsSwitcher_Steerable_PostLoad(self, savegame)
+  --if self.name == nil or self.realVehicleName == nil then
+  --  self.name = Utils.getXMLI18N(self.xmlFile, "vehicle.name", "", "(unidentified vehicle)", self.customEnvironment);
+  --end
+
+    local storeItem = StoreItemsUtil.storeItemsByXMLFilename[self.configFileName:lower()];
+    if storeItem ~= nil and storeItem.name ~= nil then
+        local brand = ""
+        if storeItem.brand ~= nil and storeItem.brand ~= "" then
+            brand = tostring(storeItem.brand) .. " " 
+        end
+        self.modVeGS = self.modVeGS or {group=0,pos=0}
+        self.modVeGS.vehicleName = brand .. tostring(storeItem.name);
+    end
 end
 Steerable.postLoad = Utils.appendedFunction(Steerable.postLoad, VehicleGroupsSwitcher_Steerable_PostLoad);
 
 -- Add extra function to Vehicle.LUA
 if Vehicle.getVehicleName == nil then
     Vehicle.getVehicleName = function(self)
+        if self.modVeGS and self.modVeGS.vehicleName then return self.modVeGS.vehicleName end;
         if self.realVehicleName then return self.realVehicleName; end;
         if self.name            then return self.name;            end;
         return "(vehicle with no name)";
@@ -92,12 +104,26 @@ end;
 
 --
 
+VehicleGroupsSwitcher.getGroupName = function(grpNum)
+  if grpNum ~= nil and grpNum >= 1 and grpNum <= 10 then
+    return VehicleGroupsSwitcher.groupNames[grpNum]
+  end
+  return ""
+end
+
+VehicleGroupsSwitcher.setGroupName = function(grpNum, grpName, force)
+  if grpNum ~= nil and grpNum >= 1 and grpNum <= 10 then
+    VehicleGroupsSwitcher.groupNames[grpNum] = tostring(grpName)
+  end
+end
+
 VehicleGroupsSwitcher.onGroupNameRename = function(self, superFunc)
   if not VehicleGroupsSwitcher.groupIdxToRename then
     superFunc(self)
   else
     if self.textElement.text ~= "" then
-      VehicleGroupsSwitcher.groupNames[VehicleGroupsSwitcher.groupIdxToRename] = filterText(self.textElement.text)
+      --VehicleGroupsSwitcher.groupNames[VehicleGroupsSwitcher.groupIdxToRename] = filterText(self.textElement.text)
+      VehicleGroupsSwitcher.setGroupName(VehicleGroupsSwitcher.groupIdxToRename, self.textElement.text)
       VehicleGroupsSwitcher.dirtyTimeout = g_currentMission.time + 2000; -- broadcast update, after 2 seconds have passed from now
       VehicleGroupsSwitcher.needToSaveGroupNames = true
     end
@@ -107,6 +133,7 @@ VehicleGroupsSwitcher.onGroupNameRename = function(self, superFunc)
   end
 end
 
+--[[
 function VehicleGroupsSwitcher.loadGroupNames()
   if g_server ~= nil or g_dedicatedServerInfo ~= nil then
     local tag="VehicleGroupsSwitcher"
@@ -122,7 +149,7 @@ function VehicleGroupsSwitcher.loadGroupNames()
           if idx == nil or idx < 1 or idx > 10 then
             break
           end
-          VehicleGroupsSwitcher.groupNames[idx]     = getXMLString(xmlFile, groupTag.."#name")
+          VehicleGroupsSwitcher.setGroupName(idx, getXMLString(xmlFile, groupTag.."#name"), true)
           --VehicleGroupsSwitcher.groupsDisabled[idx] = getXMLBool(  xmlFile, groupTag.."#disabled")
         end
         xmlFile = nil;
@@ -139,12 +166,13 @@ function VehicleGroupsSwitcher.saveGroupNames(self)
     for i=1,10 do
       local groupTag = (tag..".group(%d)"):format(i-1);
       setXMLInt(   xmlFile, groupTag.."#id", i)
-      setXMLString(xmlFile, groupTag.."#name", VehicleGroupsSwitcher.groupNames[i])
+      setXMLString(xmlFile, groupTag.."#name", VehicleGroupsSwitcher.getGroupName(i))
       --setXMLBool(  xmlFile, groupTag.."#disabled", VehicleGroupsSwitcher.groupsDisabled[i])
     end
     saveXMLFile(xmlFile)
   end
 end
+--]]
 
 --
 
@@ -153,27 +181,16 @@ function VehicleGroupsSwitcher:loadMap(name)
         return;
     end;
     if VehicleGroupsSwitcher.initialized < 0 then
-        g_careerScreen.saveSavegame = Utils.appendedFunction(g_careerScreen.saveSavegame, VehicleGroupsSwitcher.saveGroupNames)
+        --g_careerScreen.saveSavegame = Utils.appendedFunction(g_careerScreen.saveSavegame, VehicleGroupsSwitcher.saveGroupNames)
         g_chatDialog.onSendClick = Utils.overwrittenFunction(g_chatDialog.onSendClick, VehicleGroupsSwitcher.onGroupNameRename)
     end
     VehicleGroupsSwitcher.initialized = 1; -- Step-1
---print(tostring(g_currentMission.time).."ms VehicleGroupsSwitcher:loadMap(name)");
 
---[[FS2013    
-    self.hudBackground = createImageOverlay("dataS2/menu/black.png");
-    setOverlayColor(self.hudBackground, 1,1,1, 0.5);
-    VehicleGroupsSwitcher.bigFontSize   = 0.023;
-    VehicleGroupsSwitcher.smallFontSize = 0.020;
-    VehicleGroupsSwitcher.renderTextWithShade = FS13renderTextWithShade;
---]]    
-
---FS2015
     self.hudBackground = createImageOverlay("dataS2/menu/blank.png");
-    setOverlayColor(self.hudBackground, 0,0,0, 0.5)
+    setOverlayColor(self.hudBackground, 0,0,0, 0.7)
     VehicleGroupsSwitcher.bigFontSize   = 0.020;
     VehicleGroupsSwitcher.smallFontSize = 0.017;
     VehicleGroupsSwitcher.renderTextWithShade = FS15renderText;
---]]
 
     -- Screen resolution aspect ratio fixes
     local w1 = getTextWidth(VehicleGroupsSwitcher.bigFontSize, string.rep("M",20))
@@ -186,9 +203,9 @@ function VehicleGroupsSwitcher:loadMap(name)
     
     --
     for idx=1,10 do
-      VehicleGroupsSwitcher.groupNames[idx] = g_i18n:getText("group"):format(idx)
+      VehicleGroupsSwitcher.setGroupName(idx, g_i18n:getText("group"):format(idx), true)
     end
-    VehicleGroupsSwitcher.loadGroupNames()
+    --VehicleGroupsSwitcher.loadGroupNames()
     --
     self.keyModifier = getKeyIdOfModifier(InputBinding.VEGS_TOGGLE_EDIT);
     
@@ -209,14 +226,15 @@ function VehicleGroupsSwitcher:loadMap(name)
     end;
 --
     VehicleGroupsSwitcher.hideKeysInHelpbox = false
+--[[    
     local modName = "VehicleGroupsSwitcher"
-    
     if  ModsSettings ~= nil 
     and ModsSettings.isVersion ~= nil
     and ModsSettings.isVersion("0.2.0", modName)
     then
         VehicleGroupsSwitcher.hideKeysInHelpbox = ModsSettings.getBoolLocal(modName, "settings", "hideKeysInHelpBox", VehicleGroupsSwitcher.hideKeysInHelpbox)
     end
+--]]    
 --
     g_currentMission:addOnUserEventCallback(VehicleGroupsSwitcher.callbackUserEvent, self);
     VehicleGroupsSwitcher.showError = false;
@@ -234,6 +252,7 @@ function VehicleGroupsSwitcher:deleteMap()
     self.hudBackground = nil;
 end;
 
+--[[
 function VehicleGroupsSwitcher:applyHooks()    
     -- Special cases... This might probably cause me problems in future mods.
     local env = getfenv(0);
@@ -272,6 +291,7 @@ function VehicleGroupsSwitcher.loadStatusDraw(self, superFunc)
     end;
     superFunc(self);
 end
+--]]
 
 function VehicleGroupsSwitcher:mouseEvent(posX, posY, isDown, isUp, button)
 end;
@@ -280,6 +300,7 @@ function VehicleGroupsSwitcher:keyEvent(unicode, sym, modifier, isDown)
 end
 
 function VehicleGroupsSwitcher:update(dt)
+--[[
     if VehicleGroupsSwitcher.initialized < 2 then
         VehicleGroupsSwitcher.initialized = 2; -- Step-2
         -- Can not apply hooks in loadMap(), due to some random order when mods are loaded in multiplayer.
@@ -287,6 +308,7 @@ function VehicleGroupsSwitcher:update(dt)
         VehicleGroupsSwitcher.applyHooks(self);
         return;
     end;
+--]]    
     --
     -- Only "master users" has the ability to move vehicles to different groups.
     local isEditingAllowed = (g_server ~= nil);
@@ -307,15 +329,15 @@ function VehicleGroupsSwitcher:update(dt)
     end
     --
     if isEditingAllowed then
-        if not VehicleGroupsSwitcher.hideKeysInHelpbox and g_currentMission.showHelpText then
+        if not VehicleGroupsSwitcher.hideKeysInHelpbox and g_currentMission.missionInfo.showHelpMenu then
             if self.isModifying or ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) then
                 -- Show keys in helpbox
-                g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_TOGGLE_EDIT"), InputBinding.VEGS_TOGGLE_EDIT);
+                g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_TOGGLE_EDIT"), InputBinding.VEGS_TOGGLE_EDIT, nil, GS_PRIO_HIGH);
                 if self.isModifying and not g_currentMission.player.isEntered then
-                    g_currentMission:addHelpButtonText(g_i18n:getText("editGroupUp"),   InputBinding.MENU_UP);
-                    g_currentMission:addHelpButtonText(g_i18n:getText("editGroupDown"), InputBinding.MENU_DOWN);
-                    g_currentMission:addHelpButtonText(g_i18n:getText("editPosUp"),     InputBinding.MENU_LEFT);
-                    g_currentMission:addHelpButtonText(g_i18n:getText("editPosDown"),   InputBinding.MENU_RIGHT);
+                    g_currentMission:addHelpButtonText(g_i18n:getText("editGroupUp"),   InputBinding.MENU_UP    ,nil ,GS_PRIO_NORMAL);
+                    g_currentMission:addHelpButtonText(g_i18n:getText("editGroupDown"), InputBinding.MENU_DOWN  ,nil ,GS_PRIO_NORMAL);
+                    g_currentMission:addHelpButtonText(g_i18n:getText("editPosUp"),     InputBinding.MENU_LEFT  ,nil ,GS_PRIO_NORMAL);
+                    g_currentMission:addHelpButtonText(g_i18n:getText("editPosDown"),   InputBinding.MENU_RIGHT ,nil ,GS_PRIO_NORMAL);
                 end;
             end;
         end;
@@ -349,9 +371,7 @@ function VehicleGroupsSwitcher:update(dt)
                 if vehGroupOffset ~= nil then
                     local vehObj = g_currentMission.controlledVehicle;
                     if vehObj ~= nil and vehObj.isEntered then
-                        if vehObj.modVeGS == nil then
-                            vehObj.modVeGS = {group=0, pos=0};
-                        end;
+                        vehObj.modVeGS = vehObj.modVeGS or {group=0,pos=0}
                         vehObj.modVeGS.group = (vehObj.modVeGS.group + vehGroupOffset) % 11;
                         if vehObj.modVeGS.group ~= 0 then
                             vehObj.modVeGS.pos = 99;
@@ -364,9 +384,7 @@ function VehicleGroupsSwitcher:update(dt)
                 if vehPosOffset ~= nil then
                     local vehObj = g_currentMission.controlledVehicle;
                     if vehObj ~= nil and vehObj.isEntered then
-                        if vehObj.modVeGS == nil then
-                            vehObj.modVeGS = {group=0, pos=0};
-                        end;
+                        vehObj.modVeGS = vehObj.modVeGS or {group=0,pos=0}
                         if vehObj.modVeGS.group >= 1 and vehObj.modVeGS.group <= 10 then
                             local grpOrder = {}
                             for _,grpVehObj in pairs(g_currentMission.steerables) do
@@ -418,10 +436,12 @@ function VehicleGroupsSwitcher:update(dt)
         self.dirtyTimeout = nil;
         VehicleGroupsSwitcherEvent.sendEvent();
         --
+--[[        
         if VehicleGroupsSwitcher.needToSaveGroupNames then
           VehicleGroupsSwitcher.needToSaveGroupNames = nil
           VehicleGroupsSwitcher.saveGroupNames()
         end
+--]]        
     end;
     
     -- This construct is used, so we do not activate other actions that might have been assigned the normal-keys (i.e. 1,2,3...9,0)
@@ -448,10 +468,12 @@ function VehicleGroupsSwitcher:update(dt)
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_08) then multiAction = 8;
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_09) then multiAction = 9;
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_10) then multiAction = 10;
-    elseif not VehicleGroupsSwitcher.hideKeysInHelpbox and g_currentMission.showHelpText and ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) then
+    elseif not VehicleGroupsSwitcher.hideKeysInHelpbox 
+      and g_currentMission.missionInfo.showHelpMenu
+      and ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) then
         -- Show keys in helpbox, only when modifier-key is pressed (if it has been assigned)
-        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_TAB"),     InputBinding.VEGS_GRP_TAB);
-        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_NXT"),     InputBinding.VEGS_GRP_NXT);
+        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_TAB"),     InputBinding.VEGS_GRP_TAB ,nil ,GS_PRIO_LOW);
+        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_NXT"),     InputBinding.VEGS_GRP_NXT ,nil ,GS_PRIO_LOW);
     end;
 
     if self.prevAction == nil and multiAction ~= nil then
@@ -464,7 +486,7 @@ function VehicleGroupsSwitcher:update(dt)
                 -- and in editing-mode, so rename group-name
                 VehicleGroupsSwitcher.groupIdxToRename = self.prevAction[1]
                 g_gui:showGui("ChatDialog")
-                g_chatDialog.textElement:setText(VehicleGroupsSwitcher.groupNames[VehicleGroupsSwitcher.groupIdxToRename])
+                g_chatDialog.textElement:setText(VehicleGroupsSwitcher.getGroupName(VehicleGroupsSwitcher.groupIdxToRename))
             else
                 -- else it is a group enable/disable
                 local b = VehicleGroupsSwitcher.groupsDisabled[self.prevAction[1]] or false;
@@ -546,7 +568,12 @@ function VehicleGroupsSwitcher:update(dt)
     end;
 
     if foundVehObj then
-        g_client:getServerConnection():sendEvent(VehicleEnterRequestEvent:new(foundVehObj, g_settingsNickname));
+        g_client:getServerConnection():sendEvent(VehicleEnterRequestEvent:new(
+            foundVehObj, 
+            g_currentMission.missionInfo.playerName,
+            g_currentMission.missionInfo.playerIndex,
+            g_currentMission.missionInfo.playerColorIndex
+        ));
     end;
     
     -- FS15, 'crouch' work-around.
@@ -776,60 +803,18 @@ function VehicleGroupsSwitcher:draw()
                     else
                         txt = g_i18n:getText("unknown");
                     end;
+                    --[[
                     setTextAlignment(RenderText.ALIGN_RIGHT);
                     VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.smallFontSize, color, txt);
                     setTextAlignment(RenderText.ALIGN_LEFT);
+                    --]]
+                    yPos = yPos - VehicleGroupsSwitcher.smallFontSize/1.5;
+                    VehicleGroupsSwitcher.renderTextWithShade(xPos+VehicleGroupsSwitcher.smallFontSize*1.25, yPos, VehicleGroupsSwitcher.smallFontSize/1.5, color, txt);
                 end;
             end;
         end;
     end;
 end;
-
---
-function VehicleGroupsSwitcher.loadFromAttributesAndNodes(self, superFunc, xmlFile, key, resetVehicles)
-    self.modVeGS = {group=0, pos=0};
-    --
-    if --[[not resetVehicles and]] g_server ~= nil then
-        local vegsGrpPos = getXMLString(xmlFile, key .. string.format("#vegsGrpPos"));
-        if vegsGrpPos ~= nil then
-            local parts = Utils.splitString(";", vegsGrpPos);
-            if #parts > 0 then
-                local grpPos = Utils.splitString(".", parts[1]);
-                if #grpPos > 0 then
-                    self.modVeGS.group = tonumber(grpPos[1]);
-                end;
-                if #grpPos > 1 then
-                    self.modVeGS.pos = tonumber(grpPos[2]);
-                end;
-            end;
-            if #parts > 1 then
-                if parts[2] == "grpDis" and self.modVeGS.group >= 1 and self.modVeGS.group <= 10 then
-                    VehicleGroupsSwitcher.groupsDisabled[self.modVeGS.group] = true;
-                end;
-            end;
-            -- TODO: group-names
-        end;
-    end;
-    --
-    return superFunc(self, xmlFile, key, resetVehicles);
-end;
-
-function VehicleGroupsSwitcher.getSaveAttributesAndNodes(self, superFunc, nodeIdent)
-    local attributes;
-    local nodes;
-    attributes, nodes = superFunc(self, nodeIdent);
-    --
-    if self.modVeGS ~= nil and self.modVeGS.group > 0 then
-        local grpState = VehicleGroupsSwitcher.groupsDisabled[self.modVeGS.group]==true and "grpDis" or "grpEna";
-        local grpName = "reserved"; -- TODO, make sure to HTML-entity convert this!
-        attributes = attributes .. ' vegsGrpPos="'..string.format("%d.%d;%s;%s", self.modVeGS.group, self.modVeGS.pos, grpState, grpName)..'"';
-    end;
-    --
-    return attributes, nodes;
-end;
-
-Vehicle.loadFromAttributesAndNodes = Utils.overwrittenFunction(Vehicle.loadFromAttributesAndNodes, VehicleGroupsSwitcher.loadFromAttributesAndNodes);
-Vehicle.getSaveAttributesAndNodes  = Utils.overwrittenFunction(Vehicle.getSaveAttributesAndNodes,  VehicleGroupsSwitcher.getSaveAttributesAndNodes);
 
 ---
 ---
@@ -863,7 +848,7 @@ function VehicleGroupsSwitcherEvent:writeStream(streamId, connection)
     streamWriteInt8(streamId, cnt); -- If more than 127 steerables, then this will be a problem!
     if cnt > 0 then
       for i=1,10 do
-        streamWriteString(streamId, VehicleGroupsSwitcher.groupNames[i])
+        streamWriteString(streamId, VehicleGroupsSwitcher.getSroupName(i))
       end
       for i=1,cnt do
           local vegsGroup = 0;
@@ -888,8 +873,8 @@ function VehicleGroupsSwitcherEvent:readStream(streamId, connection)
     if cnt > 0 then
       for i=1,10 do
         local newName = streamReadString(streamId)
-        wasDirty = wasDirty or (VehicleGroupsSwitcher.groupNames[i] ~= newName)
-        VehicleGroupsSwitcher.groupNames[i] = newName
+        wasDirty = wasDirty or (VehicleGroupsSwitcher.getGroupName(i) ~= newName)
+        VehicleGroupsSwitcher.setGroupName(i, newName, true)
       end
       for i=1,cnt do
           local id = streamReadInt32(streamId);
