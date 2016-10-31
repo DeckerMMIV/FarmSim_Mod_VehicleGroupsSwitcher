@@ -1,14 +1,12 @@
-[b]Vehicle-groups Switcher - 'VeGS' (v2.2.x)[/b]
+[b]VehicleGroupsSwitcher - 'VeGS'[/b]
 
 
 [i]Remember to check the support topic for any additional information regarding this mod.[/i]
 
 
 [b][u]Changelog[/u][/b]
-2.2.0
-- Fix: Screen resolution aspect ratio
-2.0.11
-- Added Russian and Polish descriptions to modDesc.xml
+1.0.0.17
+- Upgraded to FS17 and changed version-numbering-scheme due to ModHub
 
 
 [b][u]Mod description[/u][/b]
