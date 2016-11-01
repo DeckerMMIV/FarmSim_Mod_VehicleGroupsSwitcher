@@ -12,7 +12,7 @@ VehicleGroupsSwitcher = {};
 local modItem = ModsUtil.findModItemByModName(g_currentModName);
 VehicleGroupsSwitcher.version = (modItem and modItem.version) and modItem.version or "?.?.?";
 --
-VehicleGroupsSwitcher.showingVeGS = false;
+VehicleGroupsSwitcher.hideKeysInHelpbox = false
 --
 VehicleGroupsSwitcher.bigFontSize   = 0.020;
 VehicleGroupsSwitcher.smallFontSize = 0.017;
@@ -33,6 +33,8 @@ VehicleGroupsSwitcher.groupsDisabled = {};
 VehicleGroupsSwitcher.initialized = -1;
 VehicleGroupsSwitcher.showError = false;
 VehicleGroupsSwitcher.hasRefreshedOnJoin = nil;
+VehicleGroupsSwitcher.showingVeGS = false;
+VehicleGroupsSwitcher.opaque = 0
 
 -- Register as event listener
 addModEventListener(VehicleGroupsSwitcher);
@@ -46,6 +48,10 @@ function VehicleGroupsSwitcher_Steerable_PostLoad(self, savegame)
   --  self.name = Utils.getXMLI18N(self.xmlFile, "vehicle.name", "", "(unidentified vehicle)", self.customEnvironment);
   --end
 
+    if self.motorType == "locomotive" then
+        return
+    end
+  
     local storeItem = StoreItemsUtil.storeItemsByXMLFilename[self.configFileName:lower()];
     if storeItem ~= nil and storeItem.name ~= nil then
         local brand = ""
@@ -62,11 +68,20 @@ Steerable.postLoad = Utils.appendedFunction(Steerable.postLoad, VehicleGroupsSwi
 if Vehicle.getVehicleName == nil then
     Vehicle.getVehicleName = function(self)
         if self.modVeGS and self.modVeGS.vehicleName then return self.modVeGS.vehicleName end;
-        if self.realVehicleName then return self.realVehicleName; end;
-        if self.name            then return self.name;            end;
+        --if self.realVehicleName then return self.realVehicleName; end;
+        --if self.name            then return self.name;            end;
         return "(vehicle with no name)";
     end
 end
+---- Add extra function to Train
+--if Train.getVehicleName == nil then
+--    Train.getVehicleName = function(self)
+--        --if self.modVeGS and self.modVeGS.vehicleName then return self.modVeGS.vehicleName end;
+--        --if self.realVehicleName then return self.realVehicleName; end;
+--        --if self.name            then return self.name;            end;
+--        return "Locomotive";
+--    end
+--end
 
 --
 --
@@ -98,7 +113,9 @@ local function FS13renderTextWithShade(x,y, textSize, forecolor, text)
 end;
 
 local function FS15renderText(x,y, textSize, forecolor, text)
-    setTextColor(unpack(forecolor));
+    local r,g,b,a = unpack(forecolor)
+    a = a * VehicleGroupsSwitcher.opaque
+    setTextColor(r,g,b,a);
     renderText(x, y, textSize, text);
 end;
 
@@ -187,7 +204,7 @@ function VehicleGroupsSwitcher:loadMap(name)
     VehicleGroupsSwitcher.initialized = 1; -- Step-1
 
     self.hudBackground = createImageOverlay("dataS2/menu/blank.png");
-    setOverlayColor(self.hudBackground, 0,0,0, 0.7)
+    --setOverlayColor(self.hudBackground, 0,0,0, 0.7)
     VehicleGroupsSwitcher.bigFontSize   = 0.020;
     VehicleGroupsSwitcher.smallFontSize = 0.017;
     VehicleGroupsSwitcher.renderTextWithShade = FS15renderText;
@@ -203,29 +220,30 @@ function VehicleGroupsSwitcher:loadMap(name)
     
     --
     for idx=1,10 do
-      VehicleGroupsSwitcher.setGroupName(idx, g_i18n:getText("group"):format(idx), true)
+        VehicleGroupsSwitcher.setGroupName(idx, g_i18n:getText("group"):format(idx), true)
     end
     --VehicleGroupsSwitcher.loadGroupNames()
     --
     self.keyModifier = getKeyIdOfModifier(InputBinding.VEGS_TOGGLE_EDIT);
     
-    if not (    self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_01)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_02)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_03)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_04)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_05)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_06)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_07)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_08)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_09)
-            and self.keyModifier == getKeyIdOfModifier(InputBinding.VEGS_GRP_10))
+    if self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_01)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_02)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_03)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_04)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_05)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_06)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_07)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_08)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_09)
+    or self.keyModifier ~= getKeyIdOfModifier(InputBinding.VEGS_GRP_10)
     then
         VehicleGroupsSwitcher.showError = true;
-        print("ERROR: One-or-more inputbindings for VehicleGroupsSwitcher do not use the same modifier-key (SHIFT/CTRL/ALT)!");
+        print("")
+        print("ERROR: One-or-more inputbindings for VehicleGroupsSwitcher does not use the same modifier-key (SHIFT/CTRL/ALT)!");
+        print("")
         return;
     end;
 --
-    VehicleGroupsSwitcher.hideKeysInHelpbox = false
 --[[    
     local modName = "VehicleGroupsSwitcher"
     if  ModsSettings ~= nil 
@@ -370,7 +388,7 @@ function VehicleGroupsSwitcher:update(dt)
                 --
                 if vehGroupOffset ~= nil then
                     local vehObj = g_currentMission.controlledVehicle;
-                    if vehObj ~= nil and vehObj.isEntered then
+                    if vehObj ~= nil and vehObj.isEntered and vehObj.motorType ~= "locomotive" then
                         vehObj.modVeGS = vehObj.modVeGS or {group=0,pos=0}
                         vehObj.modVeGS.group = (vehObj.modVeGS.group + vehGroupOffset) % 11;
                         if vehObj.modVeGS.group ~= 0 then
@@ -383,7 +401,7 @@ function VehicleGroupsSwitcher:update(dt)
                 --
                 if vehPosOffset ~= nil then
                     local vehObj = g_currentMission.controlledVehicle;
-                    if vehObj ~= nil and vehObj.isEntered then
+                    if vehObj ~= nil and vehObj.isEntered and vehObj.motorType ~= "locomotive" then
                         vehObj.modVeGS = vehObj.modVeGS or {group=0,pos=0}
                         if vehObj.modVeGS.group >= 1 and vehObj.modVeGS.group <= 10 then
                             local grpOrder = {}
@@ -450,7 +468,7 @@ function VehicleGroupsSwitcher:update(dt)
     if InputBinding.hasEvent(InputBinding.VEGS_GRP_TAB) then
         -- Switch within the same group (if possible)
         for _,vehObj in pairs(g_currentMission.steerables) do
-            if vehObj.isEntered then
+            if vehObj.isEntered and vehObj.motorType ~= "locomotive" then
                 if vehObj.modVeGS ~= nil then
                     vegsSwitchTo = vehObj.modVeGS.group;
                 end;
@@ -472,8 +490,8 @@ function VehicleGroupsSwitcher:update(dt)
       and g_currentMission.missionInfo.showHelpMenu
       and ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) then
         -- Show keys in helpbox, only when modifier-key is pressed (if it has been assigned)
-        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_TAB"),     InputBinding.VEGS_GRP_TAB ,nil ,GS_PRIO_LOW);
-        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_NXT"),     InputBinding.VEGS_GRP_NXT ,nil ,GS_PRIO_LOW);
+        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_TAB"), InputBinding.VEGS_GRP_TAB ,nil ,GS_PRIO_LOW);
+        g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_NXT"), InputBinding.VEGS_GRP_NXT ,nil ,GS_PRIO_LOW);
     end;
 
     if self.prevAction == nil and multiAction ~= nil then
@@ -645,17 +663,21 @@ function VehicleGroupsSwitcher:draw()
     end;
     --
     if VehicleGroupsSwitcher.showingVeGS then
+        VehicleGroupsSwitcher.opaque = math.min(1, VehicleGroupsSwitcher.opaque + 0.05)
+    
         local slots = { {},{},{},{},{},{},{},{},{},{} }
         local unassigned = {}
         for idx,vehObj in pairs(g_currentMission.steerables) do
-            if vehObj.modVeGS ~= nil and vehObj.modVeGS.group ~= nil and vehObj.modVeGS.group >= 1 and vehObj.modVeGS.group <= 10 then
-                if vehObj.modVeGS.pos == nil then
-                    vehObj.modVeGS.pos = 99;
+            if vehObj.getVehicleName ~= nil then
+                if vehObj.modVeGS ~= nil and vehObj.modVeGS.group ~= nil and vehObj.modVeGS.group >= 1 and vehObj.modVeGS.group <= 10 then
+                    if vehObj.modVeGS.pos == nil then
+                        vehObj.modVeGS.pos = 99;
+                    end;
+                    table.insert(slots[vehObj.modVeGS.group], vehObj);
+                else
+                    table.insert(unassigned, vehObj);
                 end;
-                table.insert(slots[vehObj.modVeGS.group], vehObj);
-            else
-                table.insert(unassigned, vehObj);
-            end;
+            end
         end;
         local slotsHeight = {}
         for idx=1,10 do
@@ -705,6 +727,7 @@ function VehicleGroupsSwitcher:draw()
         local xPos,yPos = unpack(VehicleGroupsSwitcher.hudTitlePos)
         --
         if self.hudBackground ~= nil then
+            setOverlayColor(self.hudBackground, 0,0,0, 0.7 * VehicleGroupsSwitcher.opaque)
             renderOverlay(self.hudBackground, unpack(VehicleGroupsSwitcher.hudOverlayPosSize));
         end;
         --
@@ -813,6 +836,8 @@ function VehicleGroupsSwitcher:draw()
                 end;
             end;
         end;
+    else
+        VehicleGroupsSwitcher.opaque = math.max(0, VehicleGroupsSwitcher.opaque - 0.2)
     end;
 end;
 
