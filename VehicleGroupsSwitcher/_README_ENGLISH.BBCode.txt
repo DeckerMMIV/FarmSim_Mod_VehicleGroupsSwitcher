@@ -35,13 +35,11 @@ Once you're done placing vehicles into groups, deactivate the 'VeGS: Toggle edit
 
 [u]Renaming the group-names (optional)[/u]
 
-It is now possible to rename the group-names, if so needed.
+It is possible to rename the group-names, if so needed.
 
 When in 'edit-mode', press-and-hold the modifier-key and digit 'Group #' key-sequence until the chat entry-field appears, which shows the current group-name.
 
-Type in your new group-name, though do note that the text will be filtered for bad words, what the chat usually does.
-
-The group-names will be saved in a VehicleGroupsSwitcher_Config.XML file in the savegame# folder.
+Type in your new group-name. The group-names, that contain vehicles, will be saved with the Vehicles.XML in the savegame# folder.
 
 [u]Switching groups/vehicles[/u]
 
@@ -65,7 +63,7 @@ Do note that these enabled/disabled groups will NOT be synchronized to the other
 
 Note: All VeGS key-assignments (except for the 'Switch within group' and 'To next group') [i]MUST USE[/i] the same modifier-key - i.e. LEFT-CTRL, RIGHT-CTRL, LEFT-ALT, RIGHT-ALT, LEFT-SHIFT or RIGHT-SHIFT. - The reason for this, is to make the overlay appear before the actual group-selection is made; i.e. pressing the digit key.
 
-Note: Since it is now possible to crouch in FS15, then when on-foot you much double tap the modifier-key to show the VeGS overlay.
+Note: Since it is possible to crouch in FS17, then when on-foot you must double tap the modifier-key to show the VeGS overlay.
 
 [i]not assigned[/i] - VeGS: Switch within group
 [i]not assigned[/i] - VeGS: To next group
@@ -84,7 +82,7 @@ Note: Since it is now possible to crouch in FS15, then when on-foot you much dou
 
 [b][u]Restrictions[/u][/b]
 
-This mod's script files MAY NOT, SHALL NOT and MUST NOT be embedded in any other mod nor any map-mod! - However it is accepted if this mod is packed into a mod-pack archive, when this mod's original ZIP-file and hash-value is kept intact.
+This mod's script files MAY NOT, SHALL NOT and MUST NOT be embedded in any other mod nor any map-mod!
 
 Please do NOT upload this mod to any other hosting site - I can do that myself, when needed!
 
@@ -102,7 +100,7 @@ Known bugs/problems:
 
 
 Credits:
-Script: Decker_MMIV
-Russian translation: Gonimy-Vetrom
-Italian translation: xno
-Polish translation: Dzi4d3k
+Script:
+- Decker_MMIV
+Contributors:
+- xno, Gonimy-Vetrom, Dzi4d3k
