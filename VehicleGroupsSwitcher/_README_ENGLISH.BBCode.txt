@@ -6,7 +6,8 @@
 
 [b][u]Changelog[/u][/b]
 1.0.0.17
-- Upgraded to FS17 and changed version-numbering-scheme due to ModHub
+- Upgraded to FS17
+- Changed versionnumbering-scheme due to ModHub
 
 
 [b][u]Mod description[/u][/b]
