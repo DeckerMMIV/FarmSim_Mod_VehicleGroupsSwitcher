@@ -6,7 +6,7 @@ To read more about this mod, find it on;
 
 
 ## FS17 - Change-log
-1.0.0.17
+1.0.1.17
 - Upgraded to FS17
 - Changed versionnumbering-scheme due to ModHub
 

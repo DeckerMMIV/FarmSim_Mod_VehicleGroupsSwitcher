@@ -5,7 +5,7 @@
 
 
 [b][u]Changelog[/u][/b]
-1.0.0.17
+1.0.1.17
 - Upgraded to FS17
 - Changed versionnumbering-scheme due to ModHub
 
