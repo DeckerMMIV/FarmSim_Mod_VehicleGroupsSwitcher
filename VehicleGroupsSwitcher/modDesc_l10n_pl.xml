@@ -16,9 +16,8 @@ Podziel swoją flotę pojazdów na łatwiej zarządzalne grupy i przełączaj si
     </description>
 
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
 
-<!-- needs translations -->        
         <text name="ControlsErrorTitle" text="VeGS: Problem z przypisaniem klawiszy!" />
         <text name="ControlsError"      text="Proszę przypisać ten sam klawisz sterujący dla czyności 'Grupa 1 .. 10' oraz 'Przełączanie trybu edycji' modu VeGS, w Opcje - Sterowanie.
 Klawisz sterujcy to SHIFT, CTRL lub ALT." />

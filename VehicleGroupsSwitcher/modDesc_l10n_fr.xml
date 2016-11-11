@@ -7,19 +7,18 @@
 
     <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
     <translationContributors>
-
+        translate.google.com
+        ModHub (GIANTS Software)
     </translationContributors>
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-Mettez votre flotte de véhicules en groupes plus faciles à gérer, et
-passer dans le seul groupe.
+Mettez votre flotte de véhicules dans des groupes plus maniables, et basculez dans le groupe seulement.
     </description>
         
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
 
-<!-- needs translations -->        
         <text name="ControlsErrorTitle" text="VeGS: un problème d'entrée-bindings!" />
         <text name="ControlsError"      text="S'il vous plaît assigner la même touche modificateur à tous les 'Groupe 1 .. 10' et 'Basculer en mode édition' actions pour le mod VeGS, dans Options - Commandes.
 Une clé-modificateur est SHIFT, CTRL ou ALT." />

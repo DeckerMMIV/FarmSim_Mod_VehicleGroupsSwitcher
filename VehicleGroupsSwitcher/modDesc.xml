@@ -7,9 +7,9 @@
     NOTE: For contributing translations, DO NOT edit this ModDesc.XML.
           Only modify the corresponding ModDesc_l10n_*.XML file.
 -->    
-    <contributors>xno, Gonimy-Vetrom, Dzi4d3k</contributors>
+    <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub</contributors>
 
-    <version>1.0.1.17</version>
+    <version>1.0.2.17</version>
     
     <title>
         <en>VehicleGroupsSwitcher - 'VeGS'</en>
@@ -26,11 +26,11 @@
 ]]>
         </en>
         <de>
-<![CDATA[Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und wechseln Sie nur noch innerhalb der Gruppe.
+<![CDATA[Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
 ]]>
         </de>
         <fr>
-<![CDATA[Mettez votre flotte de véhicules en groupes plus faciles à gérer, et passer dans le seul groupe.
+<![CDATA[Mettez votre flotte de véhicules dans des groupes plus maniables, et basculez dans le groupe seulement.
 ]]>
         </fr>
         <it>

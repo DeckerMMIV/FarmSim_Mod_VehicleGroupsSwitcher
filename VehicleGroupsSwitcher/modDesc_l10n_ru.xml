@@ -16,7 +16,7 @@
     </description>
 
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
         
         <text name="ControlsErrorTitle" text="VeGS: Проблема из сочетаниями клавиш!" />
         <text name="ControlsError"      text="Пожалуйста установите одинаковые клавиши-модификаторы для всех из действий 'Группа 1 ... 10' и 'Режим редактирования' для мода VeGS, в Настройки->Управление.

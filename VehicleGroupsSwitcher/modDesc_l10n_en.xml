@@ -17,7 +17,7 @@ switch within the group only.
     </description>
 
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
         
         <text name="ControlsErrorTitle" text="VeGS: Problem with input-bindings!" />
         <text name="ControlsError"      text="Please assign the same key-modifier to all the 'Group 1 .. 10' and 'Toggle edit-mode' actions for the VeGS mod, in Options - Controls.

@@ -7,17 +7,17 @@
 
     <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
     <translationContributors>
-
+        translate.google.com
+        ModHUb (GIANTS Software)
     </translationContributors>
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und
-wechseln Sie nur noch innerhalb der Gruppe.
+Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
     </description>
         
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
 
 <!-- needs translations -->        
         <text name="ControlsErrorTitle" text="VeGS: Problem mit den 'input-bindings'!" />
