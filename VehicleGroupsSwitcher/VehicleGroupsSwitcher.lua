@@ -238,7 +238,8 @@ function VehicleGroupsSwitcher:update(dt)
     --
     if isEditingAllowed then
         if  not VehicleGroupsSwitcher.hideKeysInHelpbox 
-        and g_currentMission.missionInfo.showHelpMenu 
+        --and g_currentMission.missionInfo.showHelpMenu 
+        and g_gameSettings:getValue("showHelpMenu")
         then
             if self.isModifying 
             or ((self.keyModifier == nil) or Input.isKeyPressed(self.keyModifier))
@@ -373,7 +374,8 @@ function VehicleGroupsSwitcher:update(dt)
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_09) then multiAction = 9;
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_10) then multiAction = 10;
     elseif  not VehicleGroupsSwitcher.hideKeysInHelpbox 
-        and g_currentMission.missionInfo.showHelpMenu
+        --and g_currentMission.missionInfo.showHelpMenu
+        and g_gameSettings:getValue("showHelpMenu")
         and ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier)))
         then
         -- Show keys in helpbox, only when modifier-key is pressed (if it has been assigned)

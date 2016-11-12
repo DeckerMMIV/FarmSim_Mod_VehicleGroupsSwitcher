@@ -5,7 +5,15 @@
 
 
 [b][u]Changelog[/u][/b]
+1.0.2.18
+- Translation contributions
+  - Spanish by little_farmer_27
+  - German by ModHub
+
 1.0.1.17
+- Fix bug, found by ModHub
+
+1.0.0.17
 - Upgraded to FS17
 - Changed versionnumbering-scheme due to ModHub
 
