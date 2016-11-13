@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
+    <!-- 
+        Please contribute any other translations at 
+        https://github.com/DeckerMMIV/FarmSim_Mod_VehicleGroupsSwitcher
+    -->
+
+    <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
+    <translationContributors>
+        Decker_MMIV
+    </translationContributors>
+
+    <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-<![CDATA[Put your fleet of vehicles into more manageable groups, and
+Put your fleet of vehicles into more manageable groups, and
 switch within the group only.
-
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
     </description>
 
     <texts>

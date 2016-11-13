@@ -4,46 +4,6 @@
 -- @author  Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com
 -- @date    2012-11-17
 --
--- @history
---  2012-November
---      v0.9        - Took FastSwitcher v1.3 from FS2011, and changed alot.
---      v0.91       - Added "switch within group", suggested by Knut & KaosKnite.
---      v0.92       - Minor tweaks. Could also be used in FS2011, if modified slightly.
---  2013-February   
---      v0.93       - Added "switch to next group"
---                  - Added "disable/enable group", used for "switch to next group"
---      v0.94       - Added "position within a group"
---                  - Added save/load of the above
---                  - Added hiding of Inspector while VeG-S is showing its display.
---                  - Multiplayer, synchronizing to clients when they join the game.
---  2013-July
---      v0.95       - Added hiding of LoadStatus while VeG-S is showing its display.
---      v0.96       - Patch 2.0.0.4 beta 2
---  2013-September
---      v0.97       - Multiplayer, when a player joins, automatically refresh VeG-S list.
---                  - Patch 2.0.0.7 beta 4 required, due to "Reset Vehicles"
---                  - Allow client player(s) to modify the VeG-S list, if/when either;
---                      - "Reset Vehicles" are allowed (listen server / player hosted)
---                      - or player is a "master user" (dedicated server)
---                  - Changed default key for 'Toggle edit-mode' to LEFT CTRL E.
---  2014-February
---      v0.98       - Changed method of getting vehicle name, to be the same as Glance.
---                  - getVehicleName() function added to 'Vehicle' table.
---  2014-November
---      v2.0.0      - Upgraded to FS15.
---                  - Minor text changes; "VeG-S" changed to "VeGS".
---                  - Font style and panel to fit FS15.
---                  - Now with possibility of renaming the groups.
---                     Using the chat-dialog for capturing the group-name.
---                  - Work-around for crouch, must now double-tap modifier-key when on foot.
---                  - Added tips, that switches every 7th second.
---      v2.0.1      - Fix for chat-dialog not working correctly.
---      v2.0.2      - Attempted fix for sending updates to clients.
---      v2.0.3      - Courseplay v4.00.0056 now has different way of telling if its driving.
---  2014-December
---      v2.0.5      - Hopefully better "column balancing" calculation code.
---      v2.0.6      - Fix for infinite-loop in "column balancing" code.
---
 
 
 VehicleGroupsSwitcher = {};
@@ -214,6 +174,16 @@ function VehicleGroupsSwitcher:loadMap(name)
     VehicleGroupsSwitcher.smallFontSize = 0.017;
     VehicleGroupsSwitcher.renderTextWithShade = FS15renderText;
 --]]
+
+    -- Screen resolution aspect ratio fixes
+    local w1 = getTextWidth(VehicleGroupsSwitcher.bigFontSize, string.rep("M",20))
+    local w2 = getTextWidth(VehicleGroupsSwitcher.bigFontSize, "   ")
+    VehicleGroupsSwitcher.hudOverlayPosSize = {0.5-(w1+w2),0.1, (w1+w2)*2,0.8}; -- X,Y,Width,Height
+    VehicleGroupsSwitcher.hudColumnsPos     = {
+       { 0.5-(w2/2+w1), VehicleGroupsSwitcher.hudTitlePos[2] - VehicleGroupsSwitcher.bigFontSize }  -- Col1(x,y)
+      ,{ 0.5+(w2/2),    VehicleGroupsSwitcher.hudTitlePos[2] - VehicleGroupsSwitcher.bigFontSize }  -- Col2(x,y)
+    }
+    
     --
     for idx=1,10 do
       VehicleGroupsSwitcher.groupNames[idx] = g_i18n:getText("group"):format(idx)
@@ -237,6 +207,16 @@ function VehicleGroupsSwitcher:loadMap(name)
         print("ERROR: One-or-more inputbindings for VehicleGroupsSwitcher do not use the same modifier-key (SHIFT/CTRL/ALT)!");
         return;
     end;
+--
+    VehicleGroupsSwitcher.hideKeysInHelpbox = false
+    local modName = "VehicleGroupsSwitcher"
+    
+    if  ModsSettings ~= nil 
+    and ModsSettings.isVersion ~= nil
+    and ModsSettings.isVersion("0.2.0", modName)
+    then
+        VehicleGroupsSwitcher.hideKeysInHelpbox = ModsSettings.getBoolLocal(modName, "settings", "hideKeysInHelpBox", VehicleGroupsSwitcher.hideKeysInHelpbox)
+    end
 --
     g_currentMission:addOnUserEventCallback(VehicleGroupsSwitcher.callbackUserEvent, self);
     VehicleGroupsSwitcher.showError = false;
@@ -327,7 +307,7 @@ function VehicleGroupsSwitcher:update(dt)
     end
     --
     if isEditingAllowed then
-        if g_currentMission.showHelpText then
+        if not VehicleGroupsSwitcher.hideKeysInHelpbox and g_currentMission.showHelpText then
             if self.isModifying or ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) then
                 -- Show keys in helpbox
                 g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_TOGGLE_EDIT"), InputBinding.VEGS_TOGGLE_EDIT);
@@ -468,7 +448,7 @@ function VehicleGroupsSwitcher:update(dt)
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_08) then multiAction = 8;
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_09) then multiAction = 9;
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_10) then multiAction = 10;
-    elseif g_currentMission.showHelpText and ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) then
+    elseif not VehicleGroupsSwitcher.hideKeysInHelpbox and g_currentMission.showHelpText and ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier))) then
         -- Show keys in helpbox, only when modifier-key is pressed (if it has been assigned)
         g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_TAB"),     InputBinding.VEGS_GRP_TAB);
         g_currentMission:addHelpButtonText(g_i18n:getText("VEGS_GRP_NXT"),     InputBinding.VEGS_GRP_NXT);
@@ -752,9 +732,13 @@ function VehicleGroupsSwitcher:draw()
                     else
                         txt = g_i18n:getText("unknown");
                     end;
+                    --[[
                     setTextAlignment(RenderText.ALIGN_RIGHT);
                     VehicleGroupsSwitcher.renderTextWithShade(xPos, yPos, VehicleGroupsSwitcher.smallFontSize, color, txt);
                     setTextAlignment(RenderText.ALIGN_LEFT);
+                    --]]
+                    yPos = yPos - VehicleGroupsSwitcher.smallFontSize/1.5;
+                    VehicleGroupsSwitcher.renderTextWithShade(xPos+VehicleGroupsSwitcher.smallFontSize*1.25, yPos, VehicleGroupsSwitcher.smallFontSize/1.5, color, txt);
                 end;
             end;
         end;
@@ -824,9 +808,6 @@ function VehicleGroupsSwitcher.loadFromAttributesAndNodes(self, superFunc, xmlFi
                 end;
             end;
             -- TODO: group-names
-        --else
-        --    -- Attempt to read 'VeGS v0.92' setting.
-        --    self.modVeGS.group = Utils.getNoNil(getXMLInt(xmlFile, key .. string.format("#vegs_group")), 0);
         end;
     end;
     --

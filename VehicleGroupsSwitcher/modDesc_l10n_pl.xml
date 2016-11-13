@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
+    <!-- 
+        Please contribute any other translations at 
+        https://github.com/DeckerMMIV/FarmSim_Mod_VehicleGroupsSwitcher
+    -->
+
+    <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
+    <translationContributors>
+        Dzi4d3k
+    </translationContributors>
+
+    <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-<![CDATA[Połóż swoją flotę pojazdów na bardziej przystępne grupy, a
-przełączyć się w grupie.
-
-
-Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+Podziel swoją flotę pojazdów na łatwiej zarządzalne grupy i przełączaj się wewnątrz nich.
     </description>
 
     <texts>
         <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
 
 <!-- needs translations -->        
-        <text name="ControlsErrorTitle" text="VeGS: Problem z wejściem-wiązań!" />
-        <text name="ControlsError"      text="Proszę przypisać ten sam klucz-modyfikator do wszystkich 'Grupa 1 .. 10' oraz 'Przełączanie trybu edycji' działania na VeGS mod, w Opcje - Controls.
-Key-modyfikator jest SHIFT, CTRL lub ALT." />
+        <text name="ControlsErrorTitle" text="VeGS: Problem z przypisaniem klawiszy!" />
+        <text name="ControlsError"      text="Proszę przypisać ten sam klawisz sterujący dla czyności 'Grupa 1 .. 10' oraz 'Przełączanie trybu edycji' modu VeGS, w Opcje - Sterowanie.
+Klawisz sterujcy to SHIFT, CTRL lub ALT." />
         
         <text name="groupLabel"         text="%d: %s" />
         <text name="group"              text="Grupa %d" />
@@ -22,21 +29,21 @@ Key-modyfikator jest SHIFT, CTRL lub ALT." />
 
         <text name="editGroupUp"        text="VeGS: Przejść do poprzedniej grupy" />
         <text name="editGroupDown"      text="VeGS: Przejść do następnej grupy" />
-        <text name="editPosUp"          text="VeGS: Przenieś się w ramach grupy" />
+        <text name="editPosUp"          text="VeGS: Przenieś w górę w obrębie grupy" />
         <text name="editPosDown"        text="VeGS: Przenieś w dół w obrębie grupy" />
 
         <!-- Tips when in edit-mode -->
-        <text name="tip-1"              text="Gdy w trybie edycji, należy użyć przycisków w górę/w dół, aby przejść do innej grupy pojazdów." />
-        <text name="tip-2"              text="Gdy w trybie edycji, za pomocą przycisków w lewo/w prawo, aby poruszać pojazd w grupie." />
-        <text name="tip-3"              text="Gdy w trybie edycji, zmienić nazwę grupy, przytrzymując klawisz modyfikujący dla grupy i klucz numeru." />
+        <text name="tip-1"              text="Będąc w trybie edycji, użyj przycisków w górę/w dół, aby przejść do innej grupy pojazdów." />
+        <text name="tip-2"              text="Będąc w trybie edycji, użyj przycisków w lewo/w prawo, aby przesunąć pojazd w grupie." />
+        <text name="tip-3"              text="Będąc w trybie edycji, zmień nazwę grupy, przytrzymując klawisz modyfikujący dla grupy i numer." />
 
         <!-- Tips for all users -->
-        <text name="tip1"               text="Włączanie/wyłączanie grupy przytrzymując klawisz modyfikujący dla grupy i klucz numeru." />
-        <text name="tip2"               text="Gdy na piechotę, kliknij dwukrotnie modyfikator-key pokazać VeGS." />
-        <text name="tip3"               text="Klucze do VeGS można zmienić w opcjach, ekran Controls." />
+        <text name="tip1"               text="Włączanie/wyłączanie grupy przytrzymując klawisz modyfikujący dla grupy i numer." />
+        <text name="tip2"               text="Będąc pieszo, kliknij dwukrotnie klawisz modyfikujący, aby pokazać VeGS." />
+        <text name="tip3"               text="Klawisze skrótów do VeGS można zmienić w opcjach, ekran Sterowanie." />
 
-        <text name="player"             text="(player)" />
-        <text name="hired"              text="(hired)" />
+        <text name="player"             text="(gracz)" />
+        <text name="hired"              text="(pracownik)" />
         <text name="courseplay"         text="(courseplay)" />
         <text name="followme"           text="(followme)" />
         <text name="unknown"            text="(?)" />
