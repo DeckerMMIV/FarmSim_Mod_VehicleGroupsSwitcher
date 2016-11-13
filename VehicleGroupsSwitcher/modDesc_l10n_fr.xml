@@ -7,18 +7,18 @@
 
     <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
     <translationContributors>
+        translate.google.com
+        ModHub (GIANTS Software)
     </translationContributors>
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-Mettez votre flotte de véhicules en groupes plus faciles à gérer, et
-passer dans le seul groupe.
+Mettez votre flotte de véhicules dans des groupes plus maniables, et basculez dans le groupe seulement.
     </description>
         
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
 
-<!-- needs translations -->        
         <text name="ControlsErrorTitle" text="VeGS: un problème d'entrée-bindings!" />
         <text name="ControlsError"      text="S'il vous plaît assigner la même touche modificateur à tous les 'Groupe 1 .. 10' et 'Basculer en mode édition' actions pour le mod VeGS, dans Options - Commandes.
 Une clé-modificateur est SHIFT, CTRL ou ALT." />
@@ -48,18 +48,23 @@ Une clé-modificateur est SHIFT, CTRL ou ALT." />
         <text name="followme"           text="(followme)" />
         <text name="unknown"            text="(?)" />
 
-        <text name="VEGS_GRP_TAB"       text="VeGS: Arbitrage au sein du groupe" />
-        <text name="VEGS_GRP_NXT"       text="VeGS: Pour le groupe suivant" />
-        <text name="VEGS_GRP_01"        text="VeGS: Groupe 1" />
-        <text name="VEGS_GRP_02"        text="VeGS: Groupe 2" />
-        <text name="VEGS_GRP_03"        text="VeGS: Groupe 3" />
-        <text name="VEGS_GRP_04"        text="VeGS: Groupe 4" />
-        <text name="VEGS_GRP_05"        text="VeGS: Groupe 5" />
-        <text name="VEGS_GRP_06"        text="VeGS: Groupe 6" />
-        <text name="VEGS_GRP_07"        text="VeGS: Groupe 7" />
-        <text name="VEGS_GRP_08"        text="VeGS: Groupe 8" />
-        <text name="VEGS_GRP_09"        text="VeGS: Groupe 9" />
-        <text name="VEGS_GRP_10"        text="VeGS: Groupe 10" />
-        <text name="VEGS_TOGGLE_EDIT"   text="VeGS: Basculer en mode édition" />
+        <text name="input_VEGS_GRP_TAB"       text="VeGS: Arbitrage au sein du groupe" />
+        <text name="input_VEGS_GRP_NXT"       text="VeGS: Pour le groupe suivant" />
+        <text name="input_VEGS_GRP_01"        text="VeGS: Groupe 1" />
+        <text name="input_VEGS_GRP_02"        text="VeGS: Groupe 2" />
+        <text name="input_VEGS_GRP_03"        text="VeGS: Groupe 3" />
+        <text name="input_VEGS_GRP_04"        text="VeGS: Groupe 4" />
+        <text name="input_VEGS_GRP_05"        text="VeGS: Groupe 5" />
+        <text name="input_VEGS_GRP_06"        text="VeGS: Groupe 6" />
+        <text name="input_VEGS_GRP_07"        text="VeGS: Groupe 7" />
+        <text name="input_VEGS_GRP_08"        text="VeGS: Groupe 8" />
+        <text name="input_VEGS_GRP_09"        text="VeGS: Groupe 9" />
+        <text name="input_VEGS_GRP_10"        text="VeGS: Groupe 10" />
+        <text name="input_VEGS_TOGGLE_EDIT"   text="VeGS: Basculer en mode édition" />
+
+        <text name="VEGS_GRP_TAB"             text="VeGS: Arbitrage au sein du groupe" />
+        <text name="VEGS_GRP_NXT"             text="VeGS: Pour le groupe suivant" />
+        <text name="VEGS_TOGGLE_EDIT"         text="VeGS: Basculer en mode édition" />
+        
     </texts>
 </l10n>

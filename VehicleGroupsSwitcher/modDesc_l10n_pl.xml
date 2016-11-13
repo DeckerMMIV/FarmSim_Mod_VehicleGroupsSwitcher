@@ -16,9 +16,8 @@ Podziel swoją flotę pojazdów na łatwiej zarządzalne grupy i przełączaj si
     </description>
 
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
 
-<!-- needs translations -->        
         <text name="ControlsErrorTitle" text="VeGS: Problem z przypisaniem klawiszy!" />
         <text name="ControlsError"      text="Proszę przypisać ten sam klawisz sterujący dla czyności 'Grupa 1 .. 10' oraz 'Przełączanie trybu edycji' modu VeGS, w Opcje - Sterowanie.
 Klawisz sterujcy to SHIFT, CTRL lub ALT." />
@@ -48,18 +47,23 @@ Klawisz sterujcy to SHIFT, CTRL lub ALT." />
         <text name="followme"           text="(followme)" />
         <text name="unknown"            text="(?)" />
 
-        <text name="VEGS_GRP_TAB"       text="VeGS: Przełącz się w ramach grupy" />
-        <text name="VEGS_GRP_NXT"       text="VeGS: Do następnej grupy" />
-        <text name="VEGS_GRP_01"        text="VeGS: Grupa 1" />
-        <text name="VEGS_GRP_02"        text="VeGS: Grupa 2" />
-        <text name="VEGS_GRP_03"        text="VeGS: Grupa 3" />
-        <text name="VEGS_GRP_04"        text="VeGS: Grupa 4" />
-        <text name="VEGS_GRP_05"        text="VeGS: Grupa 5" />
-        <text name="VEGS_GRP_06"        text="VeGS: Grupa 6" />
-        <text name="VEGS_GRP_07"        text="VeGS: Grupa 7" />
-        <text name="VEGS_GRP_08"        text="VeGS: Grupa 8" />
-        <text name="VEGS_GRP_09"        text="VeGS: Grupa 9" />
-        <text name="VEGS_GRP_10"        text="VeGS: Grupa 10" />
-        <text name="VEGS_TOGGLE_EDIT"   text="VeGS: Przełączanie trybu edycji" />
+        <text name="input_VEGS_GRP_TAB"       text="VeGS: Przełącz się w ramach grupy" />
+        <text name="input_VEGS_GRP_NXT"       text="VeGS: Do następnej grupy" />
+        <text name="input_VEGS_GRP_01"        text="VeGS: Grupa 1" />
+        <text name="input_VEGS_GRP_02"        text="VeGS: Grupa 2" />
+        <text name="input_VEGS_GRP_03"        text="VeGS: Grupa 3" />
+        <text name="input_VEGS_GRP_04"        text="VeGS: Grupa 4" />
+        <text name="input_VEGS_GRP_05"        text="VeGS: Grupa 5" />
+        <text name="input_VEGS_GRP_06"        text="VeGS: Grupa 6" />
+        <text name="input_VEGS_GRP_07"        text="VeGS: Grupa 7" />
+        <text name="input_VEGS_GRP_08"        text="VeGS: Grupa 8" />
+        <text name="input_VEGS_GRP_09"        text="VeGS: Grupa 9" />
+        <text name="input_VEGS_GRP_10"        text="VeGS: Grupa 10" />
+        <text name="input_VEGS_TOGGLE_EDIT"   text="VeGS: Przełączanie trybu edycji" />
+        
+        <text name="VEGS_GRP_TAB"             text="VeGS: Przełącz się w ramach grupy" />
+        <text name="VEGS_GRP_NXT"             text="VeGS: Do następnej grupy" />
+        <text name="VEGS_TOGGLE_EDIT"         text="VeGS: Przełączanie trybu edycji" />
+        
     </texts>
 </l10n>

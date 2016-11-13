@@ -1,57 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="25">
-    <author>Decker_MMIV</author>
+<modDesc descVersion="32">
+    <author>Decker_MMIV (DCK)</author>
+    <authorContact>fs-uk.com, modcentral.co.uk, forum.farming-simulator.com</authorContact>
 
-    <contributors>xno, Gonimy-Vetrom, Dzi4d3k</contributors>
+<!--
+    NOTE: For contributing translations, DO NOT edit this ModDesc.XML.
+          Only modify the corresponding ModDesc_l10n_*.XML file.
+-->    
+    <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27</contributors>
 
-    <version>2.2.0</version>
+    <version>1.0.2.18</version>
     
     <title>
-        <en>Vehicle-groups Switcher - 'VeGS'</en>
-        <de>Vehicle-groups Switcher - 'VeGS'</de>
-        <fr>Vehicle-groups Switcher - 'VeGS'</fr>
-        <it>Vehicle-groups Switcher - 'VeGS'</it>
-        <pl>Vehicle-groups Switcher - 'VeGS'</pl>
-        <ru>Vehicle-groups Switcher - 'VeGS'</ru>
+        <en>VehicleGroupsSwitcher - 'VeGS'</en>
+        <de>VehicleGroupsSwitcher - 'VeGS'</de>
+        <fr>VehicleGroupsSwitcher - 'VeGS'</fr>
+        <it>VehicleGroupsSwitcher - 'VeGS'</it>
+        <pl>VehicleGroupsSwitcher - 'VeGS'</pl>
+        <ru>VehicleGroupsSwitcher - 'VeGS'</ru>
+        <es>VehicleGroupsSwitcher - 'VeGS'</es>
     </title>
     
     <description>
         <en>
 <![CDATA[Put your fleet of vehicles into more manageable groups, and switch within the group only.
-
-Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
+]]>
         </en>
         <de>
-<![CDATA[Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und wechseln Sie nur noch innerhalb der Gruppe.
-
-Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
+<![CDATA[Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
+]]>
         </de>
         <fr>
-<![CDATA[Mettez votre flotte de véhicules en groupes plus faciles à gérer, et passer dans le seul groupe.
-
-Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
+<![CDATA[Mettez votre flotte de véhicules dans des groupes plus maniables, et basculez dans le groupe seulement.
+]]>
         </fr>
         <it>
 <![CDATA[Suddividi la tua flotta di veicoli in gruppi più gestibili, e passa da uno all'altro all'interno del gruppo.
-
-Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
+]]>
         </it>
         <pl>
 <![CDATA[Podziel swoją flotę pojazdów na łatwiej zarządzalne grupy i przełączaj się wewnątrz nich.
-
-Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
+]]>
         </pl>
         <ru>
 <![CDATA[Отсортируйте ваш автопарк на удобные группы, и переходите в пределах этих групп.        
-
-Decker_MMIV - fs-uk.com, modcentral.co.uk, forum.farming-simulator.com, modhoster.com]]>
+]]>
         </ru>
+        <es>
+<![CDATA[Organice su flota de vehículos dentro de grupos para mejor manejo. Intercambie entre los vehículos del grupo que seleccione únicamente.        
+]]>
+        </es>
     </description>
 
     <iconFilename>store_VehicleGroupsSwitcher.dds</iconFilename>
     <multiplayer supported="true" />
     
     <extraSourceFiles>
+        <sourceFile filename="register.lua" />
         <sourceFile filename="VehicleGroupsSwitcher.lua" />
     </extraSourceFiles>
 

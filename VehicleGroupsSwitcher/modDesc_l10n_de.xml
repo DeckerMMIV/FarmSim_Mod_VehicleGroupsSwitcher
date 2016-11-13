@@ -7,16 +7,17 @@
 
     <!-- Add your own name or nickname here, when you contribute to this file's translation, so I know who to put into the credits. -->
     <translationContributors>
+        translate.google.com
+        ModHUb (GIANTS Software)
     </translationContributors>
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-Teilen Sie Ihren Fuhrpark in überschaubare Gruppen ein und
-wechseln Sie nur noch innerhalb der Gruppe.
+Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
     </description>
         
     <texts>
-        <text name="VEGS"               text="== Vehicle-groups Switcher - 'VeGS' ==" />
+        <text name="VEGS"               text="== VehicleGroupsSwitcher - 'VeGS' ==" />
 
 <!-- needs translations -->        
         <text name="ControlsErrorTitle" text="VeGS: Problem mit den 'input-bindings'!" />
@@ -48,18 +49,23 @@ Mögliche Zusatztasten: SHIFT, STRG oder ALT." />
         <text name="followme"           text="(followme)" />
         <text name="unknown"            text="(unbekannt)" />
 
-        <text name="VEGS_GRP_TAB"       text="VeGS: Schalten innerh. der Gruppe" />
-        <text name="VEGS_GRP_NXT"       text="VeGS: Zum nächsten Gruppe" />
-        <text name="VEGS_GRP_01"        text="VeGS: Gruppe 1" />
-        <text name="VEGS_GRP_02"        text="VeGS: Gruppe 2" />
-        <text name="VEGS_GRP_03"        text="VeGS: Gruppe 3" />
-        <text name="VEGS_GRP_04"        text="VeGS: Gruppe 4" />
-        <text name="VEGS_GRP_05"        text="VeGS: Gruppe 5" />
-        <text name="VEGS_GRP_06"        text="VeGS: Gruppe 6" />
-        <text name="VEGS_GRP_07"        text="VeGS: Gruppe 7" />
-        <text name="VEGS_GRP_08"        text="VeGS: Gruppe 8" />
-        <text name="VEGS_GRP_09"        text="VeGS: Gruppe 9" />
-        <text name="VEGS_GRP_10"        text="VeGS: Gruppe 10" />
-        <text name="VEGS_TOGGLE_EDIT"   text="VeGS: Editiermodus ein/aus" />
+        <text name="input_VEGS_GRP_TAB"       text="VeGS: Schalten innerh. der Gruppe" />
+        <text name="input_VEGS_GRP_NXT"       text="VeGS: Zum nächsten Gruppe" />
+        <text name="input_VEGS_GRP_01"        text="VeGS: Gruppe 1" />
+        <text name="input_VEGS_GRP_02"        text="VeGS: Gruppe 2" />
+        <text name="input_VEGS_GRP_03"        text="VeGS: Gruppe 3" />
+        <text name="input_VEGS_GRP_04"        text="VeGS: Gruppe 4" />
+        <text name="input_VEGS_GRP_05"        text="VeGS: Gruppe 5" />
+        <text name="input_VEGS_GRP_06"        text="VeGS: Gruppe 6" />
+        <text name="input_VEGS_GRP_07"        text="VeGS: Gruppe 7" />
+        <text name="input_VEGS_GRP_08"        text="VeGS: Gruppe 8" />
+        <text name="input_VEGS_GRP_09"        text="VeGS: Gruppe 9" />
+        <text name="input_VEGS_GRP_10"        text="VeGS: Gruppe 10" />
+        <text name="input_VEGS_TOGGLE_EDIT"   text="VeGS: Editiermodus ein/aus" />
+
+        <text name="VEGS_GRP_TAB"             text="VeGS: Schalten innerh. der Gruppe" />
+        <text name="VEGS_GRP_NXT"             text="VeGS: Zum nächsten Gruppe" />
+        <text name="VEGS_TOGGLE_EDIT"         text="VeGS: Editiermodus ein/aus" />
+        
     </texts>
 </l10n>
