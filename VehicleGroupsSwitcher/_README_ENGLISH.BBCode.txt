@@ -5,6 +5,9 @@
 
 
 [b][u]Changelog[/u][/b]
+1.0.2.19
+- Updated Spanish translation by PromGames
+
 1.0.2.18
 - Translation contributions
   - Spanish by little_farmer_27

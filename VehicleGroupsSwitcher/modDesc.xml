@@ -7,9 +7,9 @@
     NOTE: For contributing translations, DO NOT edit this ModDesc.XML.
           Only modify the corresponding ModDesc_l10n_*.XML file.
 -->    
-    <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27</contributors>
+    <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames</contributors>
 
-    <version>1.0.2.18</version>
+    <version>1.0.2.19</version>
     
     <title>
         <en>VehicleGroupsSwitcher - 'VeGS'</en>
@@ -47,7 +47,7 @@
 ]]>
         </ru>
         <es>
-<![CDATA[Organice su flota de vehículos dentro de grupos para mejor manejo. Intercambie entre los vehículos del grupo que seleccione únicamente.        
+<![CDATA[Organice su flota de vehículos dentro de grupos para su manejo. Intercambie unicamente entre los vehículos de un grupo.
 ]]>
         </es>
     </description>

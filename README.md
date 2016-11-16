@@ -1,11 +1,15 @@
 # Farming Simulator modification - VehicleGroupsSwitcher (VeGS)
 
 To read more about this mod, find it on;
+- http://www.farming-simulator.com/mods.php
 - http://fs-uk.com - http://fs-uk.com/mods/list/team/45
 - http://modcentral.co.uk - http://modcentral.co.uk/resources/authors/decker_mmiv.18/
 
 
 ## FS17 - Change-log
+1.0.2.19
+- Updated Spanish translation by PromGames
+
 1.0.2.18
 - Translation contributions
   - Spanish by little_farmer_27
