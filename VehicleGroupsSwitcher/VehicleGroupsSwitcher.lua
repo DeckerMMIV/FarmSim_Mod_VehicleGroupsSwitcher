@@ -216,12 +216,15 @@ function VehicleGroupsSwitcher:keyEvent(unicode, sym, modifier, isDown)
 end
 
 function VehicleGroupsSwitcher:update(dt)
+    local hasEventToggleEdit = InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT)
+    
     -- Only "master users" has the ability to move vehicles to different groups.
     local isEditingAllowed = (g_server ~= nil);
+
     if g_server == nil then
         if self.isModifying 
-        or ((self.keyModifier == nil) or Input.isKeyPressed(self.keyModifier)) 
-        or InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT)
+        or hasEventToggleEdit
+        --or ((self.keyModifier == nil) or Input.isKeyPressed(self.keyModifier)) 
         then 
             -- Find if this client-user is a "master user"
             for _,v in pairs(g_currentMission.users) do
@@ -233,12 +236,16 @@ function VehicleGroupsSwitcher:update(dt)
             -- When using a Listen-server (i.e. player hosted), if "Reset Vehicles" are allowed, then allow clients to modify VeG-S too.
             -- TODO: Figure out if there is some kind of "user administration system" to use instead.
             isEditingAllowed = isEditingAllowed or g_currentMission:getHasPermission("resetVehicle")
+            
+            --
+            if hasEventToggleEdit and not isEditingAllowed then
+                g_currentMission:showBlinkingWarning("Permission denied for VeGS editing")
+            end
         end
     end
     --
     if isEditingAllowed then
         if  not VehicleGroupsSwitcher.hideKeysInHelpbox 
-        --and g_currentMission.missionInfo.showHelpMenu 
         and g_gameSettings:getValue("showHelpMenu")
         then
             if self.isModifying 
@@ -257,7 +264,7 @@ function VehicleGroupsSwitcher:update(dt)
             end;
         end;
         --
-        if InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT) 
+        if hasEventToggleEdit
         or self.isModifying
         then 
             if self.isModifying then
@@ -331,7 +338,7 @@ function VehicleGroupsSwitcher:update(dt)
                     -- If player activates some GUI screen, stop VeGS from rendering
                     self.isModifying = false;
                 else
-                    self.isModifying = not InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT);
+                    self.isModifying = not hasEventToggleEdit --InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT);
                 end;
             else
                 self.isModifying = true;
