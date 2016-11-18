@@ -66,7 +66,7 @@ function VehicleGroupsSwitcher_Steerable_PostLoad(self, savegame)
         if storeItem.brand ~= nil and storeItem.brand ~= "" then
             brand = tostring(storeItem.brand) .. " " 
         end
-        self.modVeGS = self.modVeGS or {group=0,pos=0}
+        self.modVeGS = Utils.getNoNil(self.modVeGS, {group=0,pos=0})
         self.modVeGS.vehicleName = brand .. tostring(storeItem.name);
     end
 end
@@ -276,7 +276,7 @@ function VehicleGroupsSwitcher:update(dt)
                     and vehObj.isEntered 
                     and vehObj.motorType ~= "locomotive" -- FS17
                     then
-                        vehObj.modVeGS = vehObj.modVeGS or {group=0,pos=0}
+                        vehObj.modVeGS = Utils.getNoNil(vehObj.modVeGS, {group=0,pos=0})
                         vehObj.modVeGS.group = (vehObj.modVeGS.group + vehGroupOffset) % 11;
                         if vehObj.modVeGS.group ~= 0 then
                             vehObj.modVeGS.pos = 99;
@@ -292,7 +292,7 @@ function VehicleGroupsSwitcher:update(dt)
                     and vehObj.isEntered 
                     and vehObj.motorType ~= "locomotive" -- FS17
                     then
-                        vehObj.modVeGS = vehObj.modVeGS or {group=0,pos=0}
+                        vehObj.modVeGS = Utils.getNoNil(vehObj.modVeGS, {group=0,pos=0})
                         if vehObj.modVeGS.group >= 1 and vehObj.modVeGS.group <= 10 then
                             local grpOrder = {}
                             for _,grpVehObj in pairs(g_currentMission.steerables) do
