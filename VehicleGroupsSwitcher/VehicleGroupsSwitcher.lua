@@ -224,7 +224,6 @@ function VehicleGroupsSwitcher:update(dt)
     if g_server == nil then
         if self.isModifying 
         or hasEventToggleEdit
-        --or ((self.keyModifier == nil) or Input.isKeyPressed(self.keyModifier)) 
         then 
             -- Find if this client-user is a "master user"
             for _,v in pairs(g_currentMission.users) do
@@ -338,7 +337,7 @@ function VehicleGroupsSwitcher:update(dt)
                     -- If player activates some GUI screen, stop VeGS from rendering
                     self.isModifying = false;
                 else
-                    self.isModifying = not hasEventToggleEdit --InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT);
+                    self.isModifying = not hasEventToggleEdit
                 end;
             else
                 self.isModifying = true;
@@ -381,7 +380,6 @@ function VehicleGroupsSwitcher:update(dt)
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_09) then multiAction = 9;
     elseif InputBinding.isPressed(InputBinding.VEGS_GRP_10) then multiAction = 10;
     elseif  not VehicleGroupsSwitcher.hideKeysInHelpbox 
-        --and g_currentMission.missionInfo.showHelpMenu
         and g_gameSettings:getValue("showHelpMenu")
         and ((self.keyModifier == nil) or (Input.isKeyPressed(self.keyModifier)))
         then
