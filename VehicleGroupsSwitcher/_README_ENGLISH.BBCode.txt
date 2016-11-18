@@ -5,8 +5,10 @@
 
 
 [b][u]Changelog[/u][/b]
-1.0.2.19
+1.0.2.22
 - Updated Spanish translation by PromGames
+- Multiplayer: Display warning if edit denied
+  - Requires permission 'reset vehicles'
 
 1.0.2.18
 - Translation contributions

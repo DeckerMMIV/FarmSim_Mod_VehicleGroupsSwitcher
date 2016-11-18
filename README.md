@@ -7,6 +7,10 @@ To read more about this mod, find it on;
 
 
 ## FS17 - Change-log
+1.0.2.22
+- Multiplayer: Display warning if edit denied
+  - Requires permission 'reset vehicles'
+
 1.0.2.19
 - Updated Spanish translation by PromGames
 
