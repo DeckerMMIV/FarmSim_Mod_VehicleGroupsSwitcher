@@ -69,6 +69,11 @@ function VehicleGroupsSwitcher_Steerable_PostLoad(self, savegame)
         self.modVeGS = Utils.getNoNil(self.modVeGS, {group=0,pos=0})
         self.modVeGS.vehicleName = brand .. tostring(storeItem.name);
     end
+
+    if self.isServer then
+        -- Due to FS17's vehicle customizations, the server must resend VeGS data...
+        VehicleGroupsSwitcher.dirtyTimeout = g_currentMission.time + 2000; -- broadcast update, after 2 seconds have passed from now
+    end
 end
 
 Steerable.postLoad = Utils.appendedFunction(Steerable.postLoad, VehicleGroupsSwitcher_Steerable_PostLoad);
