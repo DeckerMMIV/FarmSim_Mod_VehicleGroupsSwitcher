@@ -49,4 +49,58 @@ function RegistrationHelper_VeGS:register()
     RegistrationHelper_VeGS.isLoaded = true
 end
 
+--
+RailroadVehicle.getSaveAttributesAndNodes = Utils.overwrittenFunction(RailroadVehicle.getSaveAttributesAndNodes,
+    function(self, superFunc, nodeIdent)
+        local attributes,nodes = superFunc(self,nodeIdent);
+
+        if self.modVeGS ~= nil and self.modVeGS.group ~= nil and self.modVeGS.group > 0 then
+            if nil == nodes then
+                nodes = ""
+            else
+                nodes = nodes .. '\n'
+            end
+            nodes = nodes .. nodeIdent .. string.format('    <vehicleGroupsSwitcher grp="%d" pos="%d" grpName="%s" />'
+                ,self.modVeGS.group
+                ,self.modVeGS.pos
+                ,VehicleGroupsSwitcher.getGroupName(self.modVeGS.group)
+            )
+        end;
+
+        return attributes, nodes;
+    end
+);
+
+RailroadVehicle.load = Utils.overwrittenFunction(RailroadVehicle.load,
+    function(self, superFunc, savegame, p2, p3)
+        local res = { superFunc(self, savegame, p2, p3) }
+
+        if savegame ~= nil
+        --and not savegame.resetVehicles
+        and g_server ~= nil
+        then
+            local key = savegame.key .. '.vehicleGroupsSwitcher'
+            local grp = getXMLInt(savegame.xmlFile, key..'#grp')
+            if grp ~= nil and grp >= 1 and grp <= 10 then
+                self.modVeGS = self.modVeGS or {}
+                self.modVeGS.group = grp
+                self.modVeGS.pos = 0
+
+                local pos = getXMLInt(savegame.xmlFile, key..'#pos')
+                if pos ~= nil and pos >= 0 then
+                    self.modVeGS.pos = pos
+                end
+
+                local grpName = getXMLString(savegame.xmlFile, key..'#grpName')
+                if grpName ~= nil then
+                    VehicleGroupsSwitcher.setGroupName(grp, grpName)
+                end
+            end
+        end;
+        
+        return unpack(res)
+    end
+)
+
+--
 addModEventListener(RegistrationHelper_VeGS)

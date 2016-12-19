@@ -53,12 +53,12 @@ local function log(...)
     end
 end;
 
---
+--[[
 function VehicleGroupsSwitcher_Steerable_PostLoad(self, savegame)
-    if self.motorType == "locomotive" then
-        -- FS17 trains not supported as of yet.
-        return
-    end
+    --if self.motorType == "locomotive" then
+    --    -- FS17 trains not supported as of yet.
+    --    return
+    --end
   
     local storeItem = StoreItemsUtil.storeItemsByXMLFilename[self.configFileName:lower()];
     if storeItem ~= nil and storeItem.name ~= nil then
@@ -77,6 +77,7 @@ function VehicleGroupsSwitcher_Steerable_PostLoad(self, savegame)
 end
 
 Steerable.postLoad = Utils.appendedFunction(Steerable.postLoad, VehicleGroupsSwitcher_Steerable_PostLoad);
+--]]
 
 -- Add extra function to Vehicle.LUA
 if Vehicle.getVehicleName == nil then
@@ -85,6 +86,16 @@ if Vehicle.getVehicleName == nil then
             return self.modVeGS.vehicleName
         end;
         return "(vehicle with no name)";
+    end
+end
+
+if RailroadVehicle.getVehicleName == nil then
+    RailroadVehicle.getVehicleName = function(self)
+        return "Locomotive"
+        --if self.modVeGS and self.modVeGS.vehicleName then
+        --    return self.modVeGS.vehicleName
+        --end;
+        --return "(railroadvehicle with no name)";
     end
 end
 
@@ -285,7 +296,7 @@ function VehicleGroupsSwitcher:update(dt)
                     local vehObj = g_currentMission.controlledVehicle;
                     if  vehObj ~= nil 
                     and vehObj.isEntered 
-                    and vehObj.motorType ~= "locomotive" -- FS17
+                    --and vehObj.motorType ~= "locomotive" -- FS17
                     then
                         vehObj.modVeGS = Utils.getNoNil(vehObj.modVeGS, {group=0,pos=0})
                         vehObj.modVeGS.group = (vehObj.modVeGS.group + vehGroupOffset) % 11;
@@ -301,7 +312,7 @@ function VehicleGroupsSwitcher:update(dt)
                     local vehObj = g_currentMission.controlledVehicle;
                     if vehObj ~= nil 
                     and vehObj.isEntered 
-                    and vehObj.motorType ~= "locomotive" -- FS17
+                    --and vehObj.motorType ~= "locomotive" -- FS17
                     then
                         vehObj.modVeGS = Utils.getNoNil(vehObj.modVeGS, {group=0,pos=0})
                         if vehObj.modVeGS.group >= 1 and vehObj.modVeGS.group <= 10 then
@@ -365,7 +376,7 @@ function VehicleGroupsSwitcher:update(dt)
         -- Switch within the same group (if possible)
         for _,vehObj in pairs(g_currentMission.steerables) do
             if  vehObj.isEntered
-            and vehObj.motorType ~= "locomotive" -- FS17
+            --and vehObj.motorType ~= "locomotive" -- FS17
             then
                 if vehObj.modVeGS ~= nil then
                     vegsSwitchTo = vehObj.modVeGS.group;

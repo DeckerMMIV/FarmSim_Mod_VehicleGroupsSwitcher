@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="32">
+<modDesc descVersion="34">
     <author>Decker_MMIV (DCK)</author>
     <authorContact>fs-uk.com, modcentral.co.uk, forum.farming-simulator.com</authorContact>
 
@@ -9,7 +9,7 @@
 -->    
     <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames</contributors>
 
-    <version>1.0.2.23</version>
+    <version>1.0.2.24</version>
     
     <title>
         <en>VehicleGroupsSwitcher - 'VeGS'</en>

@@ -39,6 +39,22 @@ function VehicleGroupsSwitcher_LoadSave:postLoad(savegame)
             end
         end
     end;
+
+    --    
+    local storeItem = StoreItemsUtil.storeItemsByXMLFilename[self.configFileName:lower()];
+    if storeItem ~= nil and storeItem.name ~= nil then
+        local brand = ""
+        if storeItem.brand ~= nil and storeItem.brand ~= "" then
+            brand = tostring(storeItem.brand) .. " " 
+        end
+        self.modVeGS = Utils.getNoNil(self.modVeGS, {group=0,pos=0})
+        self.modVeGS.vehicleName = brand .. tostring(storeItem.name);
+    end
+
+    if self.isServer then
+        -- Due to FS17's vehicle customizations, the server must resend VeGS data...
+        VehicleGroupsSwitcher.dirtyTimeout = g_currentMission.time + 2000; -- broadcast update, after 2 seconds have passed from now
+    end
 end;
 
 function VehicleGroupsSwitcher_LoadSave:getSaveAttributesAndNodes(nodeIdent)
