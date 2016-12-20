@@ -53,32 +53,6 @@ local function log(...)
     end
 end;
 
---[[
-function VehicleGroupsSwitcher_Steerable_PostLoad(self, savegame)
-    --if self.motorType == "locomotive" then
-    --    -- FS17 trains not supported as of yet.
-    --    return
-    --end
-  
-    local storeItem = StoreItemsUtil.storeItemsByXMLFilename[self.configFileName:lower()];
-    if storeItem ~= nil and storeItem.name ~= nil then
-        local brand = ""
-        if storeItem.brand ~= nil and storeItem.brand ~= "" then
-            brand = tostring(storeItem.brand) .. " " 
-        end
-        self.modVeGS = Utils.getNoNil(self.modVeGS, {group=0,pos=0})
-        self.modVeGS.vehicleName = brand .. tostring(storeItem.name);
-    end
-
-    if self.isServer then
-        -- Due to FS17's vehicle customizations, the server must resend VeGS data...
-        VehicleGroupsSwitcher.dirtyTimeout = g_currentMission.time + 2000; -- broadcast update, after 2 seconds have passed from now
-    end
-end
-
-Steerable.postLoad = Utils.appendedFunction(Steerable.postLoad, VehicleGroupsSwitcher_Steerable_PostLoad);
---]]
-
 -- Add extra function to Vehicle.LUA
 if Vehicle.getVehicleName == nil then
     Vehicle.getVehicleName = function(self)
@@ -89,13 +63,13 @@ if Vehicle.getVehicleName == nil then
     end
 end
 
+-- Add extra function to RailroadVehicle.LUA
 if RailroadVehicle.getVehicleName == nil then
     RailroadVehicle.getVehicleName = function(self)
+        if self.modVeGS and self.modVeGS.vehicleName then
+            return self.modVeGS.vehicleName
+        end;
         return "Locomotive"
-        --if self.modVeGS and self.modVeGS.vehicleName then
-        --    return self.modVeGS.vehicleName
-        --end;
-        --return "(railroadvehicle with no name)";
     end
 end
 
