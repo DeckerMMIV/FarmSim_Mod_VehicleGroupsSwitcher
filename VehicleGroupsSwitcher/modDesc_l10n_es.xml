@@ -42,10 +42,11 @@ Una tecla modificador es: SHIFT, CTRL o ALT." />
         <text name="tip2"               text="Cuando caminas, presiona dos veces la tecla ctrl_izda para mostrar el menu de VeGS." />
         <text name="tip3"               text="Puede personalizar las teclas de acciones para VeGS en el menu principal: Opciones, Controles." />
 
-        <text name="player"             text="(jugador)" />
-        <text name="hired"              text="(ayudante)" />
-        <text name="courseplay"         text="(courseplay)" />
-        <text name="followme"           text="(followme)" />
+        <text name="player"             text="(Jugador)" />
+        <text name="hired"              text="(Ayudante)" />
+        <text name="courseplay"         text="(Courseplay)" />
+        <text name="followme"           text="(FollowMe)" />
+        <text name="autodrive"          text="(AutoDrive)" />
         <text name="unknown"            text="(desconocido)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Cambiar orde de vehículos en el grupo" />

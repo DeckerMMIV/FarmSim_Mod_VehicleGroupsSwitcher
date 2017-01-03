@@ -41,10 +41,11 @@
         <text name="tip2"               text="Чтобы показать VeGS находясь не в технике: дважды нажмите клавишу-модификатор" />
         <text name="tip3"               text="Клавиши для VeGS могут быть изменены в настройках игры (Опции->Управление)" />
 
-        <text name="player"             text="(игрок)" />
-        <text name="hired"              text="(работник)" />
-        <text name="courseplay"         text="(courseplay)" />
-        <text name="followme"           text="(followme)" />
+        <text name="player"             text="(Игрок)" />
+        <text name="hired"              text="(Работник)" />
+        <text name="courseplay"         text="(Courseplay)" />
+        <text name="followme"           text="(FollowMe)" />
+        <text name="autodrive"          text="(AutoDrive)" />
         <text name="unknown"            text="(?)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Переход внутри группы" />

@@ -41,10 +41,11 @@ passa da uno all'altro all'interno del gruppo.
         <text name="tip2"               text="Quando sei a piedi, premi due volte il tasto speciale per mostrare VeGS." />
         <text name="tip3"               text="I tasti per VeGS possono essere modificati accedendo a Opzioni->Comandi." />
 
-        <text name="player"             text="(player)" />
-        <text name="hired"              text="(hired)" />
-        <text name="courseplay"         text="(courseplay)" />
-        <text name="followme"           text="(followme)" />
+        <text name="player"             text="(Player)" />
+        <text name="hired"              text="(Hired)" />
+        <text name="courseplay"         text="(Courseplay)" />
+        <text name="followme"           text="(FollowMe)" />
+        <text name="autodrive"          text="(AutoDrive)" />
         <text name="unknown"            text="(?)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Cambia dentro un gruppo" />

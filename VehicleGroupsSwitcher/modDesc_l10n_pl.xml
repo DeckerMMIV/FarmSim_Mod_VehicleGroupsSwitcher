@@ -41,10 +41,11 @@ Klawisz sterujcy to SHIFT, CTRL lub ALT." />
         <text name="tip2"               text="Będąc pieszo, kliknij dwukrotnie klawisz modyfikujący, aby pokazać VeGS." />
         <text name="tip3"               text="Klawisze skrótów do VeGS można zmienić w opcjach, ekran Sterowanie." />
 
-        <text name="player"             text="(gracz)" />
-        <text name="hired"              text="(pracownik)" />
-        <text name="courseplay"         text="(courseplay)" />
-        <text name="followme"           text="(followme)" />
+        <text name="player"             text="(Gracz)" />
+        <text name="hired"              text="(Pracownik)" />
+        <text name="courseplay"         text="(Courseplay)" />
+        <text name="followme"           text="(FollowMe)" />
+        <text name="autodrive"          text="(AutoDrive)" />
         <text name="unknown"            text="(?)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Przełącz się w ramach grupy" />

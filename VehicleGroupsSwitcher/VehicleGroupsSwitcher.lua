@@ -69,7 +69,11 @@ if RailroadVehicle.getVehicleName == nil then
         if self.modVeGS and self.modVeGS.vehicleName then
             return self.modVeGS.vehicleName
         end;
-        return "Locomotive"
+        --return "Locomotive"
+        if g_i18n:hasText("locomotive") then
+            return g_i18n:getText("locomotive")
+        end
+        return g_i18n:getText("helpTitle_59") -- contains 'Train'
     end
 end
 
@@ -468,12 +472,7 @@ function VehicleGroupsSwitcher:update(dt)
     end;
 
     if foundVehObj then
-        g_client:getServerConnection():sendEvent(VehicleEnterRequestEvent:new(
-            foundVehObj, 
-            g_currentMission.missionInfo.playerName,
-            g_currentMission.missionInfo.playerIndex,      -- FS17
-            g_currentMission.missionInfo.playerColorIndex  -- FS17
-        ));
+        g_currentMission:requestToEnterVehicle(foundVehObj)
     end;
     
     -- 'Crouch' work-around.
@@ -654,10 +653,12 @@ function VehicleGroupsSwitcher:draw()
                 if txt == nil then
                     txt = g_i18n:getText("player");
                 end;
-            --elseif (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving()) then -- CoursePlay
-            --    txt = g_i18n:getText("courseplay");
+            elseif (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving()) then -- CoursePlay
+                txt = g_i18n:getText("courseplay");
             elseif (vehObj.getIsFollowMeActive ~= nil and vehObj:getIsFollowMeActive()) then -- FollowMe
                 txt = g_i18n:getText("followme");
+            elseif (g_currentMission.AutoDrive ~= nil and vehObj.ad ~= nil and vehObj.bActive == true) then -- AutoDrive
+                txt = g_i18n:getText("autodrive");
             elseif (vehObj.getIsHired ~= nil and vehObj:getIsHired()) then
                 txt = g_i18n:getText("hired");
             end;
@@ -686,10 +687,12 @@ function VehicleGroupsSwitcher:draw()
                 if txt == nil then
                     txt = g_i18n:getText("player");
                 end;
-            --elseif (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving()) then -- CoursePlay
-            --    txt = g_i18n:getText("courseplay");
+            elseif (vehObj.getIsCourseplayDriving ~= nil and vehObj:getIsCourseplayDriving()) then -- CoursePlay
+                txt = g_i18n:getText("courseplay");
             elseif (vehObj.getIsFollowMeActive ~= nil and vehObj:getIsFollowMeActive()) then -- FollowMe
                 txt = g_i18n:getText("followme");
+            elseif (g_currentMission.AutoDrive ~= nil and vehObj.ad ~= nil and vehObj.bActive == true) then -- AutoDrive
+                txt = g_i18n:getText("autodrive");
             elseif (vehObj.getIsHired ~= nil and vehObj:getIsHired()) then
                 txt = g_i18n:getText("hired");
             end;

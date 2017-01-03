@@ -42,10 +42,11 @@ A key-modifier is SHIFT, CTRL or ALT." />
         <text name="tip2"               text="When on foot, double click modifier-key to show VeGS." />
         <text name="tip3"               text="Keys for VeGS can be changed in the Options,Controls screen." />
 
-        <text name="player"             text="(player)" />
-        <text name="hired"              text="(hired)" />
-        <text name="courseplay"         text="(courseplay)" />
-        <text name="followme"           text="(followme)" />
+        <text name="player"             text="(Player)" />
+        <text name="hired"              text="(Hired)" />
+        <text name="courseplay"         text="(Courseplay)" />
+        <text name="followme"           text="(FollowMe)" />
+        <text name="autodrive"          text="(AutoDrive)" />
         <text name="unknown"            text="(?)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Switch within group" />

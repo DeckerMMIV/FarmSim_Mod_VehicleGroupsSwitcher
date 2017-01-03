@@ -42,10 +42,11 @@ Une clé-modificateur est SHIFT, CTRL ou ALT." />
         <text name="tip2"               text="Quand à pied, double-cliquez modificateur-touche pour afficher VeGS." />
         <text name="tip3"               text="Clés pour VeGS peuvent être modifiés dans les Options, l'écran Contrôles." />
 
-        <text name="player"             text="(player)" />
-        <text name="hired"              text="(hired)" />
-        <text name="courseplay"         text="(courseplay)" />
-        <text name="followme"           text="(followme)" />
+        <text name="player"             text="(Player)" />
+        <text name="hired"              text="(Hired)" />
+        <text name="courseplay"         text="(Courseplay)" />
+        <text name="followme"           text="(FollowMe)" />
+        <text name="autodrive"          text="(AutoDrive)" />
         <text name="unknown"            text="(?)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Arbitrage au sein du groupe" />

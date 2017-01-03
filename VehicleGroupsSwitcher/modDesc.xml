@@ -9,7 +9,7 @@
 -->    
     <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames</contributors>
 
-    <version>1.0.2.24</version>
+    <version>1.0.2.25</version>
     
     <title>
         <en>VehicleGroupsSwitcher - 'VeGS'</en>
@@ -25,8 +25,10 @@
         <en>
 <![CDATA[Put your fleet of vehicles into more manageable groups, and switch within the group only.
 
-Changelog (1.0.2.22)
+Changelog (1.0.2.25)
 - Spanish translation updated by contributor
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
 - Multiplayer: Display warning if edit denied
   - Requires permission 'reset vehicles'
 ]]>
@@ -34,8 +36,10 @@ Changelog (1.0.2.22)
         <de>
 <![CDATA[Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
 
-Changelog (1.0.2.22)
+Changelog (1.0.2.25)
 - Spanish translation updated by contributor
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
 - Multiplayer: Display warning if edit denied
   - Requires permission 'reset vehicles'
 ]]>
@@ -43,8 +47,10 @@ Changelog (1.0.2.22)
         <fr>
 <![CDATA[Mettez votre flotte de véhicules dans des groupes plus maniables, et basculez dans le groupe seulement.
 
-Changelog (1.0.2.22)
+Changelog (1.0.2.25)
 - Spanish translation updated by contributor
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
 - Multiplayer: Display warning if edit denied
   - Requires permission 'reset vehicles'
 ]]>
@@ -52,8 +58,10 @@ Changelog (1.0.2.22)
         <it>
 <![CDATA[Suddividi la tua flotta di veicoli in gruppi più gestibili, e passa da uno all'altro all'interno del gruppo.
 
-Changelog (1.0.2.22)
+Changelog (1.0.2.25)
 - Spanish translation updated by contributor
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
 - Multiplayer: Display warning if edit denied
   - Requires permission 'reset vehicles'
 ]]>
@@ -61,8 +69,10 @@ Changelog (1.0.2.22)
         <pl>
 <![CDATA[Podziel swoją flotę pojazdów na łatwiej zarządzalne grupy i przełączaj się wewnątrz nich.
 
-Changelog (1.0.2.22)
+Changelog (1.0.2.25)
 - Spanish translation updated by contributor
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
 - Multiplayer: Display warning if edit denied
   - Requires permission 'reset vehicles'
 ]]>
@@ -70,8 +80,10 @@ Changelog (1.0.2.22)
         <ru>
 <![CDATA[Отсортируйте ваш автопарк на удобные группы, и переходите в пределах этих групп.        
 
-Changelog (1.0.2.22)
+Changelog (1.0.2.25)
 - Spanish translation updated by contributor
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
 - Multiplayer: Display warning if edit denied
   - Requires permission 'reset vehicles'
 ]]>
@@ -79,8 +91,10 @@ Changelog (1.0.2.22)
         <es>
 <![CDATA[Organice su flota de vehículos dentro de grupos para su manejo. Intercambie unicamente entre los vehículos de un grupo.
 
-Changelog (1.0.2.22)
+Changelog (1.0.2.25)
 - Spanish translation updated by contributor
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
 - Multiplayer: Display warning if edit denied
   - Requires permission 'reset vehicles'
 ]]>

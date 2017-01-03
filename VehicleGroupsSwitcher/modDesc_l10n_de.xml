@@ -44,9 +44,10 @@ Mögliche Zusatztasten: SHIFT, STRG oder ALT." />
         <text name="tip3"               text="Keys für VeGS kann geändert werden in den Optionen Controls Bildschirm." />
 
         <text name="player"             text="(Spieler)" />
-        <text name="hired"              text="(versteckt)" />
-        <text name="courseplay"         text="(courseplay)" />
-        <text name="followme"           text="(followme)" />
+        <text name="hired"              text="(Versteckt)" />
+        <text name="courseplay"         text="(Courseplay)" />
+        <text name="followme"           text="(FollowMe)" />
+        <text name="autodrive"          text="(AutoDrive)" />
         <text name="unknown"            text="(unbekannt)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Schalten innerh. der Gruppe" />
