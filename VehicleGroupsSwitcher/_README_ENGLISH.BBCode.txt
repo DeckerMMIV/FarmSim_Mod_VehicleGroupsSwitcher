@@ -5,18 +5,11 @@
 
 
 [b][u]Changelog[/u][/b]
-1.0.2.22
-- Updated Spanish translation by PromGames
-- Multiplayer: Display warning if edit denied
-  - Requires permission 'reset vehicles'
-
-1.0.2.18
-- Translation contributions
-  - Spanish by little_farmer_27
-  - German by ModHub
-
-1.0.1.17
-- Fix bug, found by ModHub
+1.0.2.25
+- Translations updated by contributors
+- Locomotive/Train now possible to assign to group
+- Multiplayer: Fix for when doing vehicle customizations
+- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
 
 1.0.0.17
 - Upgraded to FS17
