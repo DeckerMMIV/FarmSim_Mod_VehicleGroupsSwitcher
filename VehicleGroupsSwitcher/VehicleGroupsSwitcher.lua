@@ -531,6 +531,13 @@ function VehicleGroupsSwitcher:getTipText()
     return nil
 end
 
+local function maxNameLen(txt)
+    if txt:len() > 35 then
+        txt = txt:sub(1,33) .. ".."
+    end
+    return txt
+end
+
 function VehicleGroupsSwitcher:draw()
     if VehicleGroupsSwitcher.showError then
         if InputBinding.hasEvent(InputBinding.VEGS_TOGGLE_EDIT) then
@@ -644,7 +651,7 @@ function VehicleGroupsSwitcher:draw()
         for _,vehObj in pairs(slots[idx]) do
             local color = (vehObj.isEntered and VehicleGroupsSwitcher.fontSelectedColor or grpColor);
             yPos = yPos - VehicleGroupsSwitcher.smallFontSize;
-            VehicleGroupsSwitcher.renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, tostring(vehObj:getVehicleName()));
+            VehicleGroupsSwitcher.renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, maxNameLen(tostring(vehObj:getVehicleName())));
             
             -- Is it controlled?
             local txt = nil;
@@ -678,7 +685,7 @@ function VehicleGroupsSwitcher:draw()
         for _,vehObj in pairs(unassigned) do
             local color = (vehObj.isEntered and VehicleGroupsSwitcher.fontSelectedColor or VehicleGroupsSwitcher.fontColor);
             yPos = yPos - VehicleGroupsSwitcher.smallFontSize;
-            VehicleGroupsSwitcher.renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, tostring(vehObj:getVehicleName()));
+            VehicleGroupsSwitcher.renderTextWithShade(xPos + VehicleGroupsSwitcher.smallFontSize, yPos, VehicleGroupsSwitcher.smallFontSize, color, maxNameLen(tostring(vehObj:getVehicleName())));
             
             -- Is it controlled?
             local txt = nil;

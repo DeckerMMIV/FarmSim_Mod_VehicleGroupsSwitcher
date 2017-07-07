@@ -9,7 +9,7 @@
 -->    
     <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames</contributors>
 
-    <version>1.0.2.25</version>
+    <version>1.0.3.26</version>
     
     <title>
         <en>VehicleGroupsSwitcher - 'VeGS'</en>
@@ -22,6 +22,9 @@
     </title>
 
     <changeLog><![CDATA[
+1.0.3.26
+- Truncate vehicle-names longer than 35 characters
+
 1.0.2.25
 - Translations updated by contributors
 - Locomotive/Train now possible to assign to group
