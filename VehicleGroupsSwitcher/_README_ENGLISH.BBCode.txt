@@ -5,7 +5,8 @@
 
 
 [b][u]Changelog[/u][/b]
-1.0.3.26
+1.0.3.27
+- Translations updated by contributors
 - Truncate vehicle-names longer than 35 characters
 
 1.0.2.25
@@ -113,4 +114,4 @@ Credits:
 Script:
 - Decker_MMIV
 Contributors:
-- xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames
+- xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames, Admilson2001
