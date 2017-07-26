@@ -7,6 +7,10 @@ To read more about this mod, find it on;
 
 
 ## FS17 - Change-log
+1.0.3.28
+- Translations updated by contributors
+- Truncate vehicle-names longer than 35 characters
+
 1.0.2.25
 - Translations updated by contributors
 - Locomotive/Train now possible to assign to group

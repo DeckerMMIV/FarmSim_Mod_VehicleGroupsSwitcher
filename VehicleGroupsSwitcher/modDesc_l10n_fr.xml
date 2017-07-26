@@ -13,7 +13,7 @@
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-		Mettez votre flotte de véhicules dans des groupes plus maniables, et changez de véhicule dans le groupe seulement.
+        Mettez votre flotte de véhicules dans des groupes plus maniables, et changez de véhicule dans le groupe seulement.
     </description>
         
     <texts>
@@ -49,7 +49,7 @@
         <text name="unknown"            text="(?)" />
 
         <text name="input_VEGS_GRP_TAB"       text="VeGS: Bouger dans le groupe" />
-        <text name="input_VEGS_GRP_NXT"       text="VeGS: Vers le groupe suivant" />  <!-- seem never show the event involved VEGS_GRP_NXT. -->
+        <text name="input_VEGS_GRP_NXT"       text="VeGS: Vers le groupe suivant" />
         <text name="input_VEGS_GRP_01"        text="VeGS: Groupe 1" />
         <text name="input_VEGS_GRP_02"        text="VeGS: Groupe 2" />
         <text name="input_VEGS_GRP_03"        text="VeGS: Groupe 3" />
@@ -63,7 +63,7 @@
         <text name="input_VEGS_TOGGLE_EDIT"   text="VeGS: Changer en mode édition" />
 
         <text name="VEGS_GRP_TAB"             text="VeGS: bouger dans le groupe" />
-        <text name="VEGS_GRP_NXT"             text="VeGS: vers le groupe suivant" />  <!-- seem never showed event if a key is added to input_VEGS_GRP_NXT. Maybe need fine tune if it should function-->
+        <text name="VEGS_GRP_NXT"             text="VeGS: vers le groupe suivant" />
         <text name="VEGS_TOGGLE_EDIT"         text="VeGS: mode édition" />
         
     </texts>

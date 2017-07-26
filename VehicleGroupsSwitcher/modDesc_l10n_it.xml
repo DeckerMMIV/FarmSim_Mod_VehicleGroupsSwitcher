@@ -12,8 +12,7 @@
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-Suddividi la tua flotta di veicoli in gruppi più gestibili, e
-passa da uno all'altro all'interno del gruppo.
+        Suddividi la tua flotta di veicoli in gruppi più gestibili, e passa da uno all'altro all'interno del gruppo.
     </description>
 
     <texts>

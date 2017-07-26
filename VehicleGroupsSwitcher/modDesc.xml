@@ -7,9 +7,9 @@
     NOTE: For contributing translations, DO NOT edit this ModDesc.XML.
           Only modify the corresponding ModDesc_l10n_*.XML file.
 -->    
-    <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames, Admilson2001</contributors>
+    <contributors>xno, Gonimy-Vetrom, Dzi4d3k, ModHub, little_farmer_27, PromGames, Admilson2001, Anonymous</contributors>
 
-    <version>1.0.3.27</version>
+    <version>1.0.3.28</version>
     
     <title>
         <en>VehicleGroupsSwitcher - 'VeGS'</en>
@@ -19,10 +19,11 @@
         <pl>VehicleGroupsSwitcher - 'VeGS'</pl>
         <ru>VehicleGroupsSwitcher - 'VeGS'</ru>
         <es>VehicleGroupsSwitcher - 'VeGS'</es>
+        <br>VehicleGroupsSwitcher - 'VeGS'</br>
     </title>
 
     <changeLog><![CDATA[
-1.0.3.27
+1.0.3.28
 - Translations updated by contributors
 - Truncate vehicle-names longer than 35 characters
 
@@ -39,74 +40,36 @@
     <description>
         <en>
 <![CDATA[Put your fleet of vehicles into more manageable groups, and switch within the group only.
-
-Changelog (1.0.2.25)
-- Translations updated by contributors
-- Locomotive/Train now possible to assign to group
-- Multiplayer: Fix for when doing vehicle customizations
-- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
 ]]>
         </en>
         <de>
 <![CDATA[Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
-
-Changelog (1.0.2.25)
-- Translations updated by contributors
-- Locomotive/Train now possible to assign to group
-- Multiplayer: Fix for when doing vehicle customizations
-- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
 ]]>
         </de>
         <fr>
-<![CDATA[Mettez votre flotte de véhicules dans des groupes plus maniables, et basculez dans le groupe seulement.
-
-Changelog (1.0.2.25)
-- Translations updated by contributors
-- Locomotive/Train now possible to assign to group
-- Multiplayer: Fix for when doing vehicle customizations
-- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
+<![CDATA[Mettez votre flotte de véhicules dans des groupes plus maniables, et changez de véhicule dans le groupe seulement.
 ]]>
         </fr>
         <it>
 <![CDATA[Suddividi la tua flotta di veicoli in gruppi più gestibili, e passa da uno all'altro all'interno del gruppo.
-
-Changelog (1.0.2.25)
-- Translations updated by contributors
-- Locomotive/Train now possible to assign to group
-- Multiplayer: Fix for when doing vehicle customizations
-- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
 ]]>
         </it>
         <pl>
 <![CDATA[Podziel swoją flotę pojazdów na łatwiej zarządzalne grupy i przełączaj się wewnątrz nich.
-
-Changelog (1.0.2.25)
-- Translations updated by contributors
-- Locomotive/Train now possible to assign to group
-- Multiplayer: Fix for when doing vehicle customizations
-- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
 ]]>
         </pl>
         <ru>
 <![CDATA[Отсортируйте ваш автопарк на удобные группы, и переходите в пределах этих групп.        
-
-Changelog (1.0.2.25)
-- Translations updated by contributors
-- Locomotive/Train now possible to assign to group
-- Multiplayer: Fix for when doing vehicle customizations
-- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
 ]]>
         </ru>
         <es>
 <![CDATA[Organice su flota de vehículos dentro de grupos para su manejo. Intercambie unicamente entre los vehículos de un grupo.
-
-Changelog (1.0.2.25)
-- Translations updated by contributors
-- Locomotive/Train now possible to assign to group
-- Multiplayer: Fix for when doing vehicle customizations
-- Multiplayer: Display warning if edit denied. Requires permission 'reset vehicles'
 ]]>
         </es>
+        <br>
+<![CDATA[Coloque sua frota de veículos em grupos mais gerenciáveis e mude apenas dentro do grupo.
+]]>
+        </br>
     </description>
 
     <iconFilename>store_VehicleGroupsSwitcher.dds</iconFilename>

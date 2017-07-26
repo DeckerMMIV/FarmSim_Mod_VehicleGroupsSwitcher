@@ -8,12 +8,12 @@
     <!-- Adicione seu namo ou nickname aqui, when you contribute to this file's translation, so I know who to put into the credits. -->
     <translationContributors>
         Admilson2001
+        translate.google.com
     </translationContributors>
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
-    <description>
-Put your fleet of vehicles into more manageable groups, and
-switch within the group only.
+    <description> <!-- Used translate.google.com -->
+        Coloque sua frota de veículos em grupos mais gerenciáveis e mude apenas dentro do grupo.
     </description>
 
     <texts>

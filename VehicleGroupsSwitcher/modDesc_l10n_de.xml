@@ -13,7 +13,7 @@
 
     <!-- Note that 'description' is only here for easier translations. I will manually copy it to ModDesc.XML later. -->
     <description>
-Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
+        Teilen Sie Ihre Flotte von Fahrzeugen in mehr überschaubare Gruppen ein und schalten Sie nur innerhalb der Gruppe von einem Fahrzeug zum nächsten.
     </description>
         
     <texts>
